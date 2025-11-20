@@ -18,7 +18,7 @@ export default function Footer() {
       <div className="bg-primary-500 text-white py-24 px-6">
         <div className="container grid grid-cols-1 gap-10 md:grid-cols-3 md:items-center">
           <div className="space-y-2 text-center md:text-left">
-            <Logo variant="white" className="mx-auto md:mx-0" />
+            <Logo variant="white" className="mx-auto md:mx-0 justify-center" />
             <p className="mt-3 font-medium">
               Automate text cleaning with precision
             </p>
