@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Icon } from "@iconify/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Logo from "./Logo";
 
 type NavItem = {
@@ -21,6 +22,12 @@ const baseLink =
 const activeLink = `${baseLink} text-primary-600 font-semibold`;
 const normalLink = `${baseLink} hover:bg-slate-100 text-slate-700`;
 
+const mobileMenuVariants = {
+  hidden: { opacity: 0, y: -8, scale: 0.98 },
+  visible: { opacity: 1, y: 0, scale: 1 },
+  exit: { opacity: 0, y: -8, scale: 0.98 },
+} as const;
+
 export default function TopNavbar() {
   const [open, setOpen] = useState(false);
 
@@ -28,13 +35,12 @@ export default function TopNavbar() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="fixed w-full top-0 z-50">
+    <header className="fixed top-0 z-50 w-full">
       <div className="container">
-        <div className="mt-3 flex items-center justify-between rounded-full border border-slate-200 bg-white/80 shadow-sm px-4 sm:px-6 lg:px-9 py-2.5 backdrop-blur-md">
+        <div className="mt-3 flex items-center justify-between rounded-full border border-slate-200 bg-white/80 px-4 py-2.5 shadow-sm backdrop-blur-md sm:px-6 lg:px-9">
           <Logo />
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-4 bg-primary-50/60 backdrop-blur-sm rounded-full py-2 px-5">
+          <nav className="hidden items-center gap-4 rounded-full bg-primary-50/60 px-5 py-2 backdrop-blur-sm md:flex">
             {NAV_ITEMS.map((item) =>
               item.to ? (
                 <NavLink
@@ -53,61 +59,76 @@ export default function TopNavbar() {
               )
             )}
 
-            <span className="text-xs lg:text-sm text-slate-600 font-medium">
+            <span className="text-xs font-medium text-slate-600 lg:text-sm">
               v9.9.0
             </span>
           </nav>
-
-          {/* Mobile toggle */}
+          
           <button
             type="button"
             onClick={toggleMenu}
-            className="md:hidden inline-flex items-center justify-center w-9 h-9 rounded-full border border-slate-200 text-slate-700 hover:bg-slate-100 transition"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 text-slate-700 transition hover:bg-slate-100 md:hidden"
           >
-            {open ? (
-              <Icon icon="mdi:close" width="22" />
-            ) : (
-              <Icon icon="mdi:menu" width="22" />
-            )}
+            <motion.span
+              initial={false}
+              animate={{ rotate: open ? 180 : 0, scale: open ? 1.05 : 1 }}
+              transition={{ duration: 0.18, ease: "easeOut" }}
+            >
+              {open ? (
+                <Icon icon="mdi:close" width="22" />
+              ) : (
+                <Icon icon="mdi:menu" width="22" />
+              )}
+            </motion.span>
           </button>
         </div>
 
-        {/* Mobile menu – masih di dalam container, bg ikut page di luar pill */}
-        {open && (
-          <div className="md:hidden mt-3 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm py-3 px-4">
-            <nav className="flex flex-col gap-2 text-sm font-medium text-slate-700">
-              {NAV_ITEMS.map((item) =>
-                item.to ? (
-                  <NavLink
-                    key={item.label}
-                    to={item.to}
-                    onClick={closeMenu}
-                    className={({ isActive }) =>
-                      isActive
-                        ? "px-3 py-2 rounded-xl bg-primary-50 text-primary-600"
-                        : "px-3 py-2 rounded-xl hover:bg-slate-100"
-                    }
-                  >
-                    {item.label}
-                  </NavLink>
-                ) : (
-                  <button
-                    key={item.label}
-                    type="button"
-                    onClick={closeMenu}
-                    className="text-left px-3 py-2 rounded-xl hover:bg-slate-100"
-                  >
-                    {item.label}
-                  </button>
-                )
-              )}
+        {/* Mobile menu */}
+        <AnimatePresence initial={false}>
+          {open && (
+            <motion.div
+              key="mobile-menu"
+              variants={mobileMenuVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className="mt-3 rounded-2xl border border-slate-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md md:hidden"
+            >
+              <nav className="flex flex-col gap-2 text-sm font-medium text-slate-700">
+                {NAV_ITEMS.map((item) =>
+                  item.to ? (
+                    <NavLink
+                      key={item.label}
+                      to={item.to}
+                      onClick={closeMenu}
+                      className={({ isActive }) =>
+                        isActive
+                          ? "rounded-xl bg-primary-50 px-3 py-2 text-primary-600"
+                          : "rounded-xl px-3 py-2 hover:bg-slate-100"
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                  ) : (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={closeMenu}
+                      className="rounded-xl px-3 py-2 text-left hover:bg-slate-100"
+                    >
+                      {item.label}
+                    </button>
+                  )
+                )}
 
-              <span className="mt-1 px-3 py-1.5 rounded-full bg-slate-100 text-xs text-slate-500 self-start">
-                v9.9.0
-              </span>
-            </nav>
-          </div>
-        )}
+                <span className="mt-1 self-start rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-500">
+                  v9.9.0
+                </span>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
