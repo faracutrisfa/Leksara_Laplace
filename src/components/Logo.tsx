@@ -22,7 +22,7 @@ export default function Logo({
         src={logoSrc}
         alt="Leksara Logo"
         draggable={false}
-        className="w-auto max-h-10 object-contain pointer-events-none select-none"
+        className="w-20 md:w-24 xl:w-28 object-contain pointer-events-none select-none"
       />
     </Link>
   );

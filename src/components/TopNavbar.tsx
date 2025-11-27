@@ -28,9 +28,9 @@ export default function TopNavbar() {
   const closeMenu = () => setOpen(false);
 
   return (
-    <header className="py-3 sticky top-0 z-50 bg-white/70 backdrop-blur-md">
+    <header className="fixed w-full top-0 z-50">
       <div className="container">
-        <div className="flex items-center justify-between rounded-full border shadow-md border-slate-200 px-4 sm:px-6 lg:px-9 py-3.5 bg-white/60 backdrop-blur-md">
+        <div className="mt-3 flex items-center justify-between rounded-full border border-slate-200 bg-white/80 shadow-sm px-4 sm:px-6 lg:px-9 py-2.5 backdrop-blur-md">
           <Logo />
 
           {/* Desktop nav */}
@@ -72,9 +72,9 @@ export default function TopNavbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile menu – masih di dalam container, bg ikut page di luar pill */}
         {open && (
-          <div className="md:hidden mt-3 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-md shadow-sm py-3 px-4">
+          <div className="md:hidden mt-3 rounded-2xl border border-slate-200 bg-white/90 backdrop-blur-md shadow-sm py-3 px-4">
             <nav className="flex flex-col gap-2 text-sm font-medium text-slate-700">
               {NAV_ITEMS.map((item) =>
                 item.to ? (
