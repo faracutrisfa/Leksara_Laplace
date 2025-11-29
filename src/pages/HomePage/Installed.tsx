@@ -41,18 +41,6 @@ export default function Installed() {
   const wheelAreaRef = useRef<HTMLDivElement | null>(null);
   const totalSteps = STEPS.length;
 
-  const getStepByOffset = useCallback(
-    (offset: number) => {
-      const index = (activeIndex + offset + totalSteps) % totalSteps;
-      return STEPS[index];
-    },
-    [activeIndex, totalSteps]
-  );
-
-  const active = getStepByOffset(0);
-  const prev = getStepByOffset(-1);
-  const next = getStepByOffset(1);
-
   const goNext = useCallback(() => {
     setActiveIndex((prevIdx) => (prevIdx + 1) % totalSteps);
   }, [totalSteps]);
@@ -91,6 +79,13 @@ export default function Installed() {
       el.removeEventListener("wheel", handleWheel);
     };
   }, [goNext, goPrev, lockScroll]);
+
+  const prevIndex = (activeIndex - 1 + totalSteps) % totalSteps;
+  const nextIndex = (activeIndex + 1) % totalSteps;
+
+  const active = STEPS[activeIndex];
+  const prev = STEPS[prevIndex];
+  const next = STEPS[nextIndex];
 
   const indicatorTop = `${((activeIndex + 0.5) / totalSteps) * 100}%`;
 
@@ -155,10 +150,14 @@ export default function Installed() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative select-none"
+            className="relative"
           >
             <div className="space-y-8">
-              <StepRow step={prev} variant="muted" />
+              <StepRow
+                step={prev}
+                variant="muted"
+                onSelect={() => setActiveIndex(prevIndex)}
+              />
 
               <motion.div
                 key={active.number}
@@ -170,10 +169,18 @@ export default function Installed() {
                   ease: "easeOut",
                 }}
               >
-                <StepRow step={active} variant="active" />
+                <StepRow
+                  step={active}
+                  variant="active"
+                  onSelect={() => setActiveIndex(activeIndex)}
+                />
               </motion.div>
 
-              <StepRow step={next} variant="muted" />
+              <StepRow
+                step={next}
+                variant="muted"
+                onSelect={() => setActiveIndex(nextIndex)}
+              />
             </div>
           </motion.div>
         </div>
@@ -185,15 +192,26 @@ export default function Installed() {
 interface StepRowProps {
   step: Step;
   variant: StepVariant;
+  onSelect?: () => void;
 }
 
-function StepRow({ step, variant }: StepRowProps) {
+function StepRow({ step, variant, onSelect }: StepRowProps) {
   const isActive = variant === "active";
 
   return (
     <div
+      role={onSelect ? "button" : undefined}
+      tabIndex={onSelect ? 0 : -1}
+      onClick={onSelect}
+      onKeyDown={(e) => {
+        if (!onSelect) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onSelect();
+        }
+      }}
       className={[
-        "grid grid-cols-[60px_auto] items-start px-5 gap-6 transition-all duration-300",
+        "grid grid-cols-[60px_auto] items-start gap-6 px-5 transition-all duration-300 cursor-pointer",
         isActive
           ? "translate-x-0 scale-[1.05]"
           : "-translate-x-3 scale-[0.95] opacity-40",
