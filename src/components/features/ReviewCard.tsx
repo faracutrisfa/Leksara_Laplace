@@ -31,8 +31,8 @@ export default function ReviewCard({
     <div
       className="
         inline-flex flex-col items-center
-        w-[260px] sm:w-[280px] md:w-[300px]
-        scale-[0.8] sm:scale-[0.9] md:scale-100
+        w-[260px] md:w-[280px] lg:w-[300px]
+        scale-[0.8] sm:scale-[0.9] lg:scale-100
         transition-transform
       "
     >

@@ -3,7 +3,6 @@ import DEFAULT_AVATAR from "../../public/assets/avatar.jpg";
 
 type Variant = "original" | "cleaned";
 
-
 interface UsageReviewCardProps {
   variant?: Variant;
   name?: string;

@@ -259,7 +259,7 @@ function UsageSlideContent({
           </h3>
 
           <div className="relative mt-4 sm:mt-5">
-            <div className="pointer-events-none absolute -right-6 -top-10 hidden rotate-15 sm:block">
+            <div className="hidden lg:block pointer-events-none absolute -right-6 -top-10 rotate-15">
               <WelcomeCard />
             </div>
 
@@ -276,11 +276,11 @@ function UsageSlideContent({
           </h3>
 
           <div className="mt-4 flex flex-col gap-4 sm:gap-5 lg:gap-6">
-            <div className="w-full max-w-xs self-start sm:max-w-sm">
+            <div className="flex w-full justify-start">
               <ReviewCard variant="original" />
             </div>
 
-            <div className="w-full max-w-xs self-end sm:max-w-sm">
+            <div className="flex w-full justify-end">
               <ReviewCard variant="cleaned" />
             </div>
           </div>
