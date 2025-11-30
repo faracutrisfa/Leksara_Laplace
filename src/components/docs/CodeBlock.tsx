@@ -17,7 +17,7 @@ function escapeHtml(str: string): string {
     .replace(/'/g, "&#39;");
 }
 
-function highlightCode(code: string, lang?: string): string {
+function highlightCode(code: string): string {
   return code
     .split("\n")
     .map((line) => {
@@ -58,7 +58,7 @@ export default function CodeBlock({
   };
 
   const headerText = label ?? lang;
-  const highlighted = highlightCode(children, lang);
+  const highlighted = highlightCode(children);
 
   return (
     <div
