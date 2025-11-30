@@ -61,6 +61,10 @@ export default function DocsPrevNextNav() {
 
   if (!prev && !next) return null;
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <nav className="mt-10 border-t border-neutral-5 pt-6">
       <div className="flex gap-3 md:justify-between">
@@ -68,6 +72,7 @@ export default function DocsPrevNextNav() {
         {prev ? (
           <Link
             to={prev.path}
+            onClick={handleScrollTop}
             className="group w-full md:max-w-xs rounded-xl border border-neutral-5 bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary-500 hover:shadow-md"
           >
             <p className="flex items-center gap-1 text-xs font-medium text-primary-500">
@@ -95,6 +100,7 @@ export default function DocsPrevNextNav() {
         {next ? (
           <Link
             to={next.path}
+            onClick={handleScrollTop}
             className="group w-full md:max-w-xs rounded-xl border border-neutral-5 bg-white px-4 py-3 text-left shadow-sm transition hover:border-primary-500 hover:shadow-md md:text-right"
           >
             <p className="flex items-center justify-start gap-1 text-xs font-medium text-primary-500 md:justify-end">

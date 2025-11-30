@@ -133,6 +133,10 @@ export default function DocsSidebarNav() {
   const { pathname } = useLocation();
   const activeModuleKey = MODULE_ITEMS.find((m) => m.to === pathname)?.key;
 
+  const handleScrollTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <nav
       className="
@@ -172,6 +176,7 @@ export default function DocsSidebarNav() {
             <NavLink
               key={item.key}
               to={item.to}
+              onClick={handleScrollTop}
               className={
                 PRIMARY_BASE + (active ? PRIMARY_ACTIVE : PRIMARY_INACTIVE)
               }
@@ -200,6 +205,7 @@ export default function DocsSidebarNav() {
             <div key={module.key} className="space-y-1">
               <NavLink
                 to={module.to}
+                onClick={handleScrollTop}
                 className={
                   MODULE_BASE + (isActive ? MODULE_ACTIVE : MODULE_INACTIVE)
                 }

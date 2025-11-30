@@ -1,5 +1,12 @@
 import CodeBlock from "../../components/docs/CodeBlock";
-import SectionHeading from "../../components/docs/SectionHeading"; // ⬅️ pakai reusable
+import SectionHeading from "../../components/docs/SectionHeading";
+
+const OVERVIEW_POINTS = [
+  "Dealing with e-commerce data",
+  "Working with messy and uncleaned data",
+  "Handling informal, slangs, acronyms, non-alphabeticals",
+  "Helps flags noises and non-alphabeticals within the dataset",
+];
 
 const MODULES = [
   {
@@ -29,6 +36,10 @@ const MODULES = [
   },
 ];
 
+const envListClass = "mt-4 ml-6 list-disc space-y-1 text-neutral-4 font-medium";
+const bodyTextClass =
+  "mt-3 text-[13px] sm:text-[15px] leading-relaxed text-neutral-4 font-medium";
+
 export default function GettingStarted() {
   return (
     <article className="text-sm sm:text-base text-slate-700 leading-relaxed">
@@ -36,8 +47,9 @@ export default function GettingStarted() {
         Getting Started with Leksara
       </h1>
 
+      {/* Overview ----------------------------------------------------------- */}
       <section className="mt-6">
-        <h2 className="text-lg sm:text-xl font-semibold text-slate-900">
+        <h2 className="text-lg sm:text-xl font-semibold text-neutral-2">
           Overview
         </h2>
 
@@ -45,24 +57,21 @@ export default function GettingStarted() {
           <li>
             Leksara is a toolkit in Python to effectively help Data Scientists
             and ML Engineers in preprocessing and cleaning raw text data from
-            e-commerce domains. Leksara are mainly functional to be used for:
+            e-commerce domains. Leksara is mainly designed to be used for:
             <ul className="mt-2 ml-6 list-[lower-alpha] space-y-1">
-              <li>Dealing with e-commerce data</li>
-              <li>Working with messy and uncleaned data</li>
-              <li>Handling informal, slangs, acronyms, non-alphabeticals</li>
-              <li>
-                Helps flags noises and non-alphabeticals within the dataset
-              </li>
+              {OVERVIEW_POINTS.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
             </ul>
           </li>
         </ol>
       </section>
 
-      {/* 01 — Environment */}
+      {/* 01 — Environment --------------------------------------------------- */}
       <section id="environment" className="mt-10">
         <SectionHeading index="01" title="Environment" />
 
-        <ul className="mt-4 ml-6 list-disc space-y-1 text-neutral-4 font-medium">
+        <ul className={envListClass}>
           <li>
             <strong>Python:</strong> 3.9, 3.10, 3.11, 3.12
           </li>
@@ -75,7 +84,7 @@ export default function GettingStarted() {
           </li>
         </ul>
 
-        <p className="mt-3 text-[13px] sm:text-[15px] leading-relaxed text-neutral-4 font-medium">
+        <p className={bodyTextClass}>
           Since Leksara relies solely on pure-Python dependencies, installation
           requires no compiler on any supported platform.
         </p>
@@ -89,7 +98,7 @@ pip install leksara`}
         </div>
       </section>
 
-      {/* 02 — Leksara Modules */}
+      {/* 02 — Leksara Modules ---------------------------------------------- */}
       <section id="modules" className="mt-12 sm:mt-14">
         <SectionHeading index="02" title="Leksara Modules" />
 
@@ -100,7 +109,7 @@ pip install leksara`}
         <ul className="mt-3 ml-6 space-y-1">
           {MODULES.map((module) => (
             <li key={module.name} className="flex items-start gap-2">
-              <span className="text-primary-500 text-lg ">•</span>
+              <span className="text-primary-500 text-lg">•</span>
               <p>
                 <span className="font-semibold text-primary-600">
                   {module.name} :
