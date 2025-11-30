@@ -1,8 +1,5 @@
-import SectionHeading from "../../components/docs/SectionHeading";
-import BlockHeading from "../../components/docs/BlockHeading";
 import DocList from "../../components/docs/DocList";
 import UseCase from "../../components/docs/UseCase";
-import DataFrameCard from "../../components/docs/DataFrameCard";
 
 export default function ApiOverview() {
   return (
