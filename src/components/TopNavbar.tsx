@@ -34,18 +34,22 @@ export default function TopNavbar() {
   const toggleMenu = () => setOpen((prev) => !prev);
   const closeMenu = () => setOpen(false);
 
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
   return (
     <header className="fixed top-0 z-50 w-full">
       <div className="container">
         <div className="mt-3 flex items-center justify-between rounded-full border border-slate-200 bg-white/80 px-4 py-2.5 shadow-sm backdrop-blur-md sm:px-6 lg:px-9">
           <Logo />
 
+          {/* Desktop Nav */}
           <nav className="hidden items-center gap-4 rounded-full bg-primary-50/60 px-5 py-2 backdrop-blur-sm md:flex">
             {NAV_ITEMS.map((item) =>
               item.to ? (
                 <NavLink
                   key={item.label}
                   to={item.to}
+                  onClick={scrollToTop}
                   className={({ isActive }) =>
                     isActive ? activeLink : normalLink
                   }
@@ -53,7 +57,12 @@ export default function TopNavbar() {
                   {item.label}
                 </NavLink>
               ) : (
-                <a key={item.label} href={item.href} className={normalLink}>
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={scrollToTop}
+                  className={normalLink}
+                >
                   {item.label}
                 </a>
               )
@@ -63,7 +72,8 @@ export default function TopNavbar() {
               v9.9.0
             </span>
           </nav>
-          
+
+          {/* Mobile Toggle */}
           <button
             type="button"
             onClick={toggleMenu}
@@ -101,7 +111,10 @@ export default function TopNavbar() {
                     <NavLink
                       key={item.label}
                       to={item.to}
-                      onClick={closeMenu}
+                      onClick={() => {
+                        scrollToTop();
+                        closeMenu();
+                      }}
                       className={({ isActive }) =>
                         isActive
                           ? "rounded-xl bg-primary-50 px-3 py-2 text-primary-600"
@@ -114,7 +127,10 @@ export default function TopNavbar() {
                     <button
                       key={item.label}
                       type="button"
-                      onClick={closeMenu}
+                      onClick={() => {
+                        scrollToTop();
+                        closeMenu();
+                      }}
                       className="rounded-xl px-3 py-2 text-left hover:bg-slate-100"
                     >
                       {item.label}
