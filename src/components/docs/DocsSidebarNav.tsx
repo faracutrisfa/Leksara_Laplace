@@ -106,12 +106,14 @@ const MODULE_ITEMS: ModuleItem[] = [
 ];
 
 const PRIMARY_BASE =
-  "flex items-center gap-2 rounded-md px-3 py-2 text-xs md:text-sm font-medium transition";
+  "flex w-full items-center gap-2 rounded-lg px-3 py-2.5 text-[11px] sm:text-xs md:text-[13px] font-medium transition";
 const PRIMARY_ACTIVE = " bg-primary-500 text-white shadow-sm";
-const PRIMARY_INACTIVE = " text-slate-500 hover:bg-slate-100";
+const PRIMARY_INACTIVE =
+  " text-slate-600 hover:bg-slate-100 active:bg-slate-100/80";
 
-const MODULE_BASE = "block px-1 py-1 transition";
-const MODULE_ACTIVE = " text-primary-600 font-medium";
+const MODULE_BASE =
+  "block w-full rounded-md px-1.5 py-1.5 text-[11px] sm:text-xs md:text-[13px] transition";
+const MODULE_ACTIVE = " text-primary-600 font-semibold";
 const MODULE_INACTIVE = " text-slate-600 hover:text-primary-600";
 
 function isPrimaryActive(key: PrimaryItemKey, pathname: string): boolean {
@@ -132,23 +134,37 @@ export default function DocsSidebarNav() {
   const activeModuleKey = MODULE_ITEMS.find((m) => m.to === pathname)?.key;
 
   return (
-    <nav className="text-sm max-h-[calc(100vh-96px)] overflow-y-auto space-y-6 px-1">
+    <nav
+      className="
+        space-y-6 px-1 pb-4 pt-1 text-sm
+        md:max-h-[calc(100vh-96px)] md:overflow-y-auto
+      "
+    >
       {/* Search */}
       <div className="relative">
         <Icon
           icon="mdi:magnify"
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
           width={18}
         />
         <input
           type="text"
           placeholder="Search"
-          className="w-full rounded-md border-2 border-neutral-5 bg-white px-9 py-2 text-xs md:text-sm placeholder:text-slate-400 focus:border-primary-500 focus:outline-none"
+          className="
+            w-full rounded-lg border-2 border-neutral-5 bg-white
+            px-9 py-2 text-xs sm:text-sm
+            placeholder:text-slate-400
+            focus:border-primary-500 focus:outline-none
+          "
         />
       </div>
 
       {/* Primary items */}
-      <div className="space-y-1">
+      <div className="space-y-2">
+        <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-400 md:text-[10px]">
+          Quick access
+        </p>
+
         {PRIMARY_ITEMS.map((item) => {
           const active = isPrimaryActive(item.key, pathname);
 
@@ -165,7 +181,7 @@ export default function DocsSidebarNav() {
                 width={16}
                 className={active ? "text-white" : "text-neutral-4"}
               />
-              {item.label}
+              <span className="truncate">{item.label}</span>
             </NavLink>
           );
         })}
@@ -173,11 +189,15 @@ export default function DocsSidebarNav() {
 
       {/* Modules */}
       <div className="space-y-2 text-xs md:text-sm">
+        <p className="px-1 text-[11px] font-semibold uppercase tracking-wide text-neutral-400 md:text-[10px]">
+          Modules
+        </p>
+
         {MODULE_ITEMS.map((module) => {
           const isActive = activeModuleKey === module.key;
 
           return (
-            <div key={module.key}>
+            <div key={module.key} className="space-y-1">
               <NavLink
                 to={module.to}
                 className={
@@ -188,7 +208,7 @@ export default function DocsSidebarNav() {
               </NavLink>
 
               {isActive && module.methods && (
-                <ul className="ml-4 mt-1 border-l border-primary-600 pl-3 space-y-3 text-[12px] text-slate-500">
+                <ul className="ml-4 mt-1 space-y-2 border-l border-primary-200 pl-3 text-[11px] text-slate-500">
                   {module.methods.map((method) => (
                     <li key={method.label} className="leading-4">
                       {method.label}

@@ -8,6 +8,41 @@ interface CodeBlockProps {
   shadowBlue?: boolean;
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function highlightCode(code: string, lang?: string): string {
+  return code
+    .split("\n")
+    .map((line) => {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("#")) {
+        return `<span class="text-neutral-4">${escapeHtml(line)}</span>`;
+      }
+
+      const hashIndex = line.indexOf(" #");
+      if (hashIndex !== -1) {
+        const before = line.slice(0, hashIndex);
+        const comment = line.slice(hashIndex);
+
+        const beforeEscaped = escapeHtml(before);
+        const commentEscaped = escapeHtml(comment);
+
+        return `${beforeEscaped}<span class="text-neutral-4">${commentEscaped}</span>`;
+      }
+
+      return escapeHtml(line);
+    })
+    .join("\n");
+}
+
 export default function CodeBlock({
   label,
   lang = "BASH",
@@ -23,6 +58,7 @@ export default function CodeBlock({
   };
 
   const headerText = label ?? lang;
+  const highlighted = highlightCode(children, lang);
 
   return (
     <div
@@ -38,6 +74,7 @@ export default function CodeBlock({
         </div>
 
         <button
+          type="button"
           onClick={handleCopy}
           className="flex items-center gap-1 text-white"
         >
@@ -49,8 +86,8 @@ export default function CodeBlock({
         </button>
       </div>
 
-      <pre className="overflow-x-auto whitespace-pre-wrap p-4 font-code text-xs lg:text-[15px] leading-relaxed text-primary-700">
-        <code>{children}</code>
+      <pre className="overflow-x-auto whitespace-pre-wrap p-4 font-code text-xs leading-relaxed text-primary-900 lg:text-[15px]">
+        <code dangerouslySetInnerHTML={{ __html: highlighted }} />
       </pre>
     </div>
   );
