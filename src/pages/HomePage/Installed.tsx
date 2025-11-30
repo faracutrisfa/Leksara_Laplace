@@ -117,7 +117,7 @@ export default function Installed() {
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative overflow-hidden rounded-3xl bg-primary-50/70 px-8 py-10 lg:px-12 lg:py-12"
           >
-            <div className="absolute left-6 top-8 bottom-8 w-0.5 rounded-full bg-primary-100" />
+            <div className="absolute left-5.5 top-8 bottom-8 w-1 rounded-full bg-primary-200" />
 
             <motion.div
               layout
