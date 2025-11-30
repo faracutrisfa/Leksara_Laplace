@@ -3,6 +3,9 @@ import BlockHeading from "../../components/docs/BlockHeading";
 import DocList from "../../components/docs/DocList";
 import UseCase from "../../components/docs/UseCase";
 
+const introTextClass =
+  "sm:ml-14 mt-3 text-[13px] sm:text-[15px] leading-relaxed text-neutral-4 font-medium";
+
 const CLASS_PARAMS = [
   <span>
     <strong>data</strong> (iterable[str] or pandas.Series): Input text data.
@@ -38,13 +41,17 @@ export default function ReviewChain() {
         Leksara Modules
       </h1>
 
-      <section className="mt-6">
-        <SectionHeading index="05" title="Review Chain" />
+      <section className="mt-10">
+        <SectionHeading index="05" title="ReviewChain" />
 
-        <p className="mt-3 max-w-3xl font-medium text-neutral-4">
-          End-to-end Indonesian text preprocessing pipeline with support for
-          customizable steps, benchmarking, and logging.
-        </p>
+        <div className={introTextClass}>
+          <p>
+            End-to-end Indonesian text preprocessing pipeline with support for
+            customizable steps, benchmarking, and logging. Functions & Class:
+            run_pipeline (includes benchmark and preset), ReviewChain (class),
+            get_preset, logging (includes setup_logging and log_pipeline_step)
+          </p>
+        </div>
 
         <div className="mt-6">
           <BlockHeading

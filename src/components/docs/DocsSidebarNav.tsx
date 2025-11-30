@@ -141,7 +141,7 @@ export default function DocsSidebarNav() {
     <nav
       className="
         space-y-6 px-1 pb-4 pt-1 text-sm
-        md:max-h-[calc(100vh-96px)] md:overflow-y-auto
+        md:max-h-[calc(100vh-96px)] 
       "
     >
       {/* Search */}

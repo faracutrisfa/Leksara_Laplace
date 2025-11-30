@@ -4,7 +4,7 @@ import { Icon } from "@iconify/react";
 import TopNavbar from "../components/TopNavbar";
 import DocsSidebarNav from "../components/docs/DocsSidebarNav";
 import Footer from "../components/Footer";
-import DocsPrevNextNav from "../components/docs/DocsPrevNextNav"; // ⬅️ tambahkan ini
+import DocsPrevNextNav from "../components/docs/DocsPrevNextNav";
 
 export default function DocsLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
