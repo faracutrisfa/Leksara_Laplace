@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { motion, type Variants } from "framer-motion";
 import Benefit1 from "../../../public/assets/benefit/benefit1.webp";
 import Benefit2 from "../../../public/assets/benefit/benefit2.webp";
 import Benefit3 from "../../../public/assets/benefit/benefit3.webp";
@@ -37,52 +38,128 @@ const BENEFITS = [
   },
 ] as const;
 
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+const badgeVariants: Variants = {
+  hidden: { opacity: 0, y: -12, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45 },
+  },
+};
+
+const headingVariants: Variants = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45 },
+  },
+};
+
+const gridVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.12,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 18, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4 },
+  },
+};
+
 export default function Benefit() {
   return (
     <section className="relative">
       <div className="container">
-        <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-lg font-semibold text-primary-600">
+        <motion.div
+          className="flex justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.6 }}
+          variants={sectionVariants}
+        >
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-lg font-semibold text-primary-600"
+            variants={badgeVariants}
+          >
             <Icon icon="material-symbols:dashboard-rounded" width={18} />
             <span>Benefit</span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <h2 className="mt-6 text-center text-2xl sm:text-4xl font-semibold text-neutral-900">
-          How <span className="text-primary-500">Leksara</span> Empowers Your
-          Workflow
-        </h2>
+        <motion.div
+          className="mt-6 space-y-4 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={headingVariants}
+        >
+          <h2 className="text-2xl font-semibold text-neutral-900 sm:text-4xl">
+            How <span className="text-primary-500">Leksara</span> Empowers Your
+            Workflow
+          </h2>
 
-        <p className="mt-4 mx-auto max-w-4xl text-center text-xs md:text-sm lg:text-lg font-semibold text-neutral-600">
-          Leksara transforms the way Data Scientists and Machine Learning
-          Engineers handle raw Indonesian text. By automating repetitive
-          preprocessing steps, it eliminates hours of manual cleaning and
-          ensures consistent, high-quality results across projects.
-        </p>
+          <p className="mx-auto max-w-4xl text-xs font-semibold text-neutral-600 md:text-sm lg:text-lg">
+            Leksara transforms the way Data Scientists and Machine Learning
+            Engineers handle raw Indonesian text. By automating repetitive
+            preprocessing steps, it eliminates hours of manual cleaning and
+            ensures consistent, high-quality results across projects.
+          </p>
+        </motion.div>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-x-10 gap-10 lg:gap-y-16">
+        <motion.div
+          className="mt-12 flex flex-wrap justify-center gap-10 gap-x-10 lg:gap-y-16"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.35 }}
+          variants={gridVariants}
+        >
           {BENEFITS.map((item) => (
-            <div
+            <motion.div
               key={item.title}
-              className="w-1/2 md:w-1/3 flex flex-col items-center text-center px-2 max-w-xs"
+              className="flex max-w-xs w-1/2 flex-col items-center px-2 text-center md:w-1/3"
+              variants={cardVariants}
+              whileHover={{ y: -6, scale: 1.02 }}
+              transition={{ duration: 0.25 }}
             >
               <img
                 src={item.image}
                 alt={item.title}
-                className="mb-4 h-28 w-auto object-contain select-none"
+                className="mb-4 h-28 w-auto select-none object-contain"
                 draggable={false}
                 onDragStart={(e) => e.preventDefault()}
                 onMouseDown={(e) => e.preventDefault()}
               />
-              <h3 className="text-sm sm:text-base md:text-lg font-bold text-neutral-900">
+              <h3 className="text-sm font-bold text-neutral-900 sm:text-base md:text-lg">
                 {item.title}
               </h3>
-              <p className="mt-2 text-xs sm:text-sm text-neutral-600">
+              <p className="mt-2 text-xs text-neutral-600 sm:text-sm">
                 {item.description}
               </p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

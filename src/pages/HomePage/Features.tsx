@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 import CodeBlock from "../../components/docs/CodeBlock";
 import WelcomeCard from "../../components/features/WelcomeCard";
 import ReviewCard from "../../components/features/ReviewCard";
@@ -66,7 +66,26 @@ print(df[["chat_id", "safe_message"]])`,
   },
 ];
 
-const slideVariants = {
+const badgeVariants: Variants = {
+  hidden: { opacity: 0, y: -20, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45 },
+  },
+};
+
+const headingVariants: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45 },
+  },
+};
+
+const slideVariants: Variants = {
   enter: (direction: number) => ({
     x: direction > 0 ? "100%" : "-100%",
     opacity: 1,
@@ -88,38 +107,54 @@ export default function Features() {
   const active = SLIDES[index];
 
   useEffect(() => {
-    const intervalId = window.setInterval(() => {
+    const id = window.setInterval(() => {
       setDirection(1);
       setIndex((prev) => (prev + 1) % SLIDES.length);
     }, 6000);
 
-    return () => {
-      window.clearInterval(intervalId);
-    };
+    return () => window.clearInterval(id);
   }, []);
 
   return (
     <section className="relative">
       <div className="container">
-        <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-xs font-semibold text-primary-600 sm:text-sm md:text-base">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
+          }}
+          className="flex flex-col items-center"
+        >
+          <motion.div
+            className="mt-2 inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-600 sm:text-base"
+            variants={badgeVariants}
+          >
             <Icon icon="material-symbols:dashboard-rounded" width={18} />
             <span>Features</span>
-          </div>
-        </div>
+          </motion.div>
 
-        <h2 className="mt-6 text-center text-2xl font-semibold text-neutral-900 sm:text-3xl lg:text-4xl">
-          <span className="text-primary-500">Usage</span> Example
-        </h2>
+          <motion.h2
+            variants={headingVariants}
+            className="mt-6 text-center text-2xl font-semibold text-neutral-900 sm:text-3xl lg:text-4xl"
+          >
+            <span className="text-primary-500">Usage</span> Example
+          </motion.h2>
 
-        <p className="mx-auto mt-4 max-w-3xl text-center text-xs font-medium text-neutral-600 sm:text-sm lg:text-base">
-          See how Leksara turns hours of manual text cleaning into a seamless,
-          automated process — so your team can focus on insights, modeling, and
-          innovation.
-        </p>
+          <motion.p
+            variants={headingVariants}
+            className="mx-auto mt-4 max-w-3xl text-center text-xs font-medium text-neutral-600 sm:text-sm lg:text-base"
+          >
+            See how Leksara turns hours of manual text cleaning into a seamless,
+            automated process — so your team can focus on insights, modeling,
+            and innovation.
+          </motion.p>
+        </motion.div>
 
         <div className="relative mt-10 sm:mt-12">
-          <div className="relative min-h-[420px] sm:min-h-[440px] lg:min-h-[460px] overflow-hidden">
+          <div className="relative min-h-[420px] overflow-hidden sm:min-h-[440px] lg:min-h-[460px]">
             <AnimatePresence mode="wait" custom={direction}>
               <motion.div
                 key={active.id}
@@ -128,7 +163,7 @@ export default function Features() {
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                transition={{ duration: 0.45 }}
               >
                 <UsageSlideContent
                   slide={active}
@@ -177,8 +212,8 @@ function UsageSlideContent({
     ? "md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]"
     : "md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]";
 
-  const inputCardOrder = isBasic ? "" : "md:order-2";
-  const outputCardOrder = isBasic ? "" : "md:order-1";
+  const inputOrder = isBasic ? "" : "md:order-2";
+  const outputOrder = isBasic ? "" : "md:order-1";
 
   return (
     <div className="space-y-6 lg:space-y-8">
@@ -214,7 +249,7 @@ function UsageSlideContent({
         className={`grid items-start gap-6 rounded-3xl bg-neutral-50/80 px-4 py-6 sm:gap-8 sm:px-6 sm:py-7 lg:px-8 lg:py-8 ${layoutClass}`}
       >
         <div
-          className={`relative rounded-2xl bg-linear-to-b from-primary-100 to-white/80 p-5 sm:p-7 lg:p-8 ${inputCardOrder}`}
+          className={`relative rounded-2xl bg-linear-to-b from-primary-100 to-white/80 p-5 sm:p-7 lg:p-8 ${inputOrder}`}
         >
           <p className="text-base font-semibold text-primary-500 sm:text-2xl">
             01 / Input
@@ -232,7 +267,7 @@ function UsageSlideContent({
           </div>
         </div>
 
-        <div className={`p-5 sm:p-7 lg:p-8 ${outputCardOrder}`}>
+        <div className={`p-5 sm:p-7 lg:p-8 ${outputOrder}`}>
           <p className="text-base font-semibold text-primary-500 sm:text-2xl">
             02 / Output
           </p>
@@ -241,11 +276,11 @@ function UsageSlideContent({
           </h3>
 
           <div className="mt-4 flex flex-col gap-4 sm:gap-5 lg:gap-6">
-            <div className="self-start w-full max-w-xs sm:max-w-sm">
+            <div className="w-full max-w-xs self-start sm:max-w-sm">
               <ReviewCard variant="original" />
             </div>
 
-            <div className="self-end w-full max-w-xs sm:max-w-sm">
+            <div className="w-full max-w-xs self-end sm:max-w-sm">
               <ReviewCard variant="cleaned" />
             </div>
           </div>

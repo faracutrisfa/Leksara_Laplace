@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Icon } from "@iconify/react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import CodeBlock from "../../components/docs/CodeBlock";
 
 const STEPS = [
@@ -34,6 +34,52 @@ print(leksara.__version__)`,
 
 type Step = (typeof STEPS)[number];
 type StepVariant = "active" | "muted";
+
+const leftCardVariants: Variants = {
+  hidden: { opacity: 0, x: -30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+const rightColVariants: Variants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5 },
+  },
+};
+
+const badgeVariants: Variants = {
+  hidden: { opacity: 0, y: -12, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.4 },
+  },
+};
+
+const headingVariants: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45 },
+  },
+};
+
+const activeStepVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35 },
+  },
+};
 
 export default function Installed() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -93,29 +139,43 @@ export default function Installed() {
     <section className="relative">
       <div className="container">
         <div className="flex justify-center">
-          <div className="inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-600">
+          <motion.div
+            className="inline-flex items-center gap-2 rounded-lg bg-primary-50 px-4 py-2 text-sm font-semibold text-primary-600"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.6 }}
+            variants={badgeVariants}
+          >
             <Icon icon="material-symbols:dashboard-rounded" width={18} />
             <span>Installed</span>
-          </div>
+          </motion.div>
         </div>
 
-        <h2 className="mt-6 text-center text-2xl font-semibold text-neutral-900 sm:text-4xl">
-          How to <span className="text-primary-500">Install</span>
-        </h2>
+        <motion.div
+          className="mt-6 text-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={headingVariants}
+        >
+          <h2 className="text-2xl font-semibold text-neutral-900 sm:text-4xl">
+            How to <span className="text-primary-500">Install</span>
+          </h2>
 
-        <p className="mx-auto mt-4 max-w-3xl text-center text-xs text-neutral-600 md:text-sm lg:text-lg">
-          See how Leksara turns hours of manual text cleaning into a seamless,
-          automated process — so your team can focus on insights, modeling, and
-          innovation.
-        </p>
+          <p className="mx-auto mt-4 max-w-3xl text-xs text-neutral-600 md:text-sm lg:text-lg">
+            See how Leksara turns hours of manual text cleaning into a seamless,
+            automated process — so your team can focus on insights, modeling,
+            and innovation.
+          </p>
+        </motion.div>
 
         <div className="mt-14 grid items-center gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative overflow-hidden rounded-3xl bg-primary-50/70 px-8 py-10 lg:px-12 lg:py-12"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            variants={leftCardVariants}
           >
             <div className="absolute left-5.5 top-8 bottom-8 w-1 rounded-full bg-primary-200" />
 
@@ -123,7 +183,7 @@ export default function Installed() {
               layout
               className="absolute left-[22px] w-1 rounded-full bg-primary-500"
               style={{ top: indicatorTop, height: "56px" }}
-              transition={{ duration: 0.25, ease: "easeOut" }}
+              transition={{ duration: 0.25 }}
             />
 
             <Icon
@@ -146,11 +206,11 @@ export default function Installed() {
 
           <motion.div
             ref={wheelAreaRef}
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.4 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            variants={rightColVariants}
           >
             <div className="space-y-8">
               <StepRow
@@ -161,13 +221,9 @@ export default function Installed() {
 
               <motion.div
                 key={active.number}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.35,
-                  ease: "easeOut",
-                }}
+                variants={activeStepVariants}
+                initial="hidden"
+                animate="visible"
               >
                 <StepRow
                   step={active}
@@ -211,7 +267,7 @@ function StepRow({ step, variant, onSelect }: StepRowProps) {
         }
       }}
       className={[
-        "grid grid-cols-[60px_auto] items-start gap-6 px-5 transition-all duration-300 cursor-pointer",
+        "grid cursor-pointer grid-cols-[60px_auto] items-start gap-6 px-5 transition-all duration-300",
         isActive
           ? "translate-x-0 scale-[1.05]"
           : "-translate-x-3 scale-[0.95] opacity-40",
