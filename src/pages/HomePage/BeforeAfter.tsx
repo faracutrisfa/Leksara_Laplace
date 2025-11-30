@@ -1,10 +1,7 @@
 import { Icon } from "@iconify/react";
 import CodeBlock from "../../components/docs/CodeBlock";
-
-import Before1 from "../../../public/assets/before_after/before1.svg";
-import Before2 from "../../../public/assets/before_after/before2.svg";
-import After1 from "../../../public/assets/before_after/after1.svg";
-import After2 from "../../../public/assets/before_after/after2.svg";
+import CardReview from "../../components/CardReview";
+import ReviewCard from "../../components/features/ReviewCard";
 
 export default function BeforeAfter() {
   return (
@@ -17,16 +14,16 @@ export default function BeforeAfter() {
           </div>
         </div>
 
-        <h2 className="mt-6 text-center text-2xl sm:text-3xl lg:text-4xl font-semibold text-neutral-900">
+        <h2 className="mt-6 text-center text-2xl font-semibold text-neutral-900 sm:text-3xl lg:text-4xl">
           <span className="text-primary-500">Before</span> Vs After Leksara
         </h2>
 
-        <p className="mt-4 mx-auto max-w-4xl text-center text-xs md:text-sm lg:text-lg font-semibold text-neutral-600">
+        <p className="mx-auto mt-4 max-w-4xl text-center text-xs font-semibold text-neutral-600 md:text-sm lg:text-lg">
           See how Leksara transforms messy, unstructured text into clean,
           ready-to-analyze data — instantly.
         </p>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-2">
+        <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <div className="space-y-6">
             <div>
               <h3 className="text-lg font-semibold text-neutral-900">
@@ -38,22 +35,25 @@ export default function BeforeAfter() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center gap-3">
-              <img
-                src={Before1}
-                alt="Before example 1"
-                className="w-full max-w-md select-none"
-                draggable={false}
-              />
-              <img
-                src={Before2}
-                alt="Before example 2"
-                className="w-full max-w-md select-none"
-                draggable={false}
-              />
+            <div className="mt-4 flex flex-col gap-4 sm:gap-5 lg:gap-6">
+              <div className="self-start w-full max-w-xs sm:max-w-sm">
+                <CardReview
+                  variant="original"
+                  name="Fransisco"
+                  text="Barangnya bagus banget murah tapi kualitas mantap', 'pesanan telat hr tapi masih ok lah'"
+                />
+              </div>
+
+              <div className="self-end w-full max-w-xs sm:max-w-sm">
+                <CardReview
+                  variant="original"
+                  name="Fransisco"
+                  text="gak sesuai gambar kecewa"
+                />
+              </div>
             </div>
 
-            <CodeBlock shadowBlue label="Quick example" lang="PYTHON">
+            <CodeBlock shadowBlue label="Before Leksara" lang="PYTHON">
               {`from leksara import Leksara
 
 cleaner = Leksara()
@@ -83,22 +83,25 @@ print(cleaned)`}
               </p>
             </div>
 
-            <div className="flex flex-col items-center gap-3 -mt-0.5">
-              <img
-                src={After1}
-                alt="After example 1"
-                className="w-full max-w-md select-none"
-                draggable={false}
-              />
-              <img
-                src={After2}
-                alt="After example 2"
-                className="w-full max-w-md select-none"
-                draggable={false}
-              />
+            <div className="mt-4 flex flex-col gap-4 sm:gap-5 lg:gap-6">
+              <div className="self-start w-full max-w-xs sm:max-w-sm">
+                <CardReview
+                  variant="cleaned"
+                  name="Fransisco"
+                  text="Barangnya bagus banget murah tapi kualitas mantap'"
+                />
+              </div>
+
+              <div className="self-end w-full max-w-xs sm:max-w-sm">
+                <CardReview
+                  variant="cleaned"
+                  name="Fransisco"
+                  text="Tidak sesuai gambar kecewa"
+                />
+              </div>
             </div>
 
-            <CodeBlock shadowBlue label="Quick example" lang="PYTHON">
+            <CodeBlock shadowBlue label="After Leksara" lang="PYTHON">
               {`from leksara import Leksara
 
 cleaner = Leksara()

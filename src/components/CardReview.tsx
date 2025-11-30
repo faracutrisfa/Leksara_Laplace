@@ -1,7 +1,8 @@
 import { Icon } from "@iconify/react";
-import DEFAULT_AVATAR from "../../../public/assets/avatar.jpg";
+import DEFAULT_AVATAR from "../../public/assets/avatar.jpg";
 
 type Variant = "original" | "cleaned";
+
 
 interface UsageReviewCardProps {
   variant?: Variant;
@@ -10,16 +11,13 @@ interface UsageReviewCardProps {
   avatarUrl?: string;
 }
 
-export default function ReviewCard({
+export default function CardReview({
   variant = "original",
   name = "Fransisco",
   text,
   avatarUrl = DEFAULT_AVATAR,
 }: UsageReviewCardProps) {
   const isOriginal = variant === "original";
-
-  const badgeEmoji = isOriginal ? "🔍" : "🧹";
-  const badgeText = isOriginal ? "Original" : "Cleaned";
 
   const defaultText = isOriginal
     ? "brgnya ORI & Pengiriman Cepat. Mantull👍"
@@ -36,11 +34,6 @@ export default function ReviewCard({
         transition-transform
       "
     >
-      <div className="mb-2 inline-flex items-center gap-2 rounded-[10px] bg-primary-100 px-3 py-1.5 text-primary-700 font-semibold">
-        <span className="text-sm">{badgeEmoji}</span>
-        <span className="text-xs sm:text-sm font-semibold">{badgeText}</span>
-      </div>
-
       <div
         className="
           relative flex items-center gap-3
