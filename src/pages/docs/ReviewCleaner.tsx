@@ -28,13 +28,13 @@ export default function ReviewCleaner() {
           </p>
         </div>
 
-        {/* 01 — replace_rating --------------------------------------------------- */}
+        {/* 01 — remove_tags --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="01"
-            title="replace_rating"
+            title="remove_tags"
             signature="replace_string(text: str)-> str"
-            description="Converts rating patterns or expressions (e.g., ⭐️⭐️⭐️, 4.5/5) into standardized tokens or numeric values"
+            description="Removes HTML tags and converts encoded HTML entities (like &nbsp;, &amp;, etc.) back to their readable characters. Also replaces non-breaking spaces (\u00A0) with normal spaces for consistency."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -48,7 +48,7 @@ export default function ReviewCleaner() {
                   {
                     name: "text",
                     type: "str",
-                    description: "Raw text that may contain rating patterns ",
+                    description: "Raw text that may contain HTML.",
                   },
                 ]}
               />
@@ -62,18 +62,21 @@ export default function ReviewCleaner() {
                   {
                     name: "str",
                     description:
-                      "Text with rating patterns or expressions turned into standardized numeric values.",
+                      "Text without markup and with decoded entities.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`rating_text = “Film ini dapet rating 4,5/5 di review pelanggan.”
+              {`from leksara.function import remove_tags
 
-print(replace_rating(rating_text))
->> Film ini dapet rating 4.5 di review pelanggan
-)`}
+text = "<p>Halo &amp; selamat&nbsp;datang</p>"
+result = remove_tags(text)
+print(result)
+
+>>> "Halo & selamat datang"
+`}
             </UseCase>
 
             <div>
@@ -85,13 +88,13 @@ print(replace_rating(rating_text))
           </div>
         </div>
 
-        {/* 02 — shorten_elongation --------------------------------------------------- */}
+        {/* 02 — case_normal --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="02"
-            title="shorten_elongation"
-            signature="shorten_elongation(text: str, max_repeat: int = 2) -> str:"
-            description="Reduces excessive repeated characters in a word to a manageable length (e.g., “Woow” -> “Wow”)"
+            title="case_normal"
+            signature="case_normal (text: str)-> str:"
+            description="Normalize text to lowercase using str.casefold() for robust Unicode handling."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -105,14 +108,7 @@ print(replace_rating(rating_text))
                   {
                     name: "text",
                     type: "str",
-                    description:
-                      "Raw text that may contain elongation or excessive repeated characters",
-                  },
-                  {
-                    name: "max_repeat",
-                    type: "int = 2",
-                    description:
-                      "Maximum allowed consecutive repetitions of the same character",
+                    description: "Raw text",
                   },
                 ]}
               />
@@ -125,18 +121,22 @@ print(replace_rating(rating_text))
                 items={[
                   {
                     name: "str",
-                    description:
-                      "Text with a shortened elongation and manageable length of excessive characters in words",
+                    description: "Lowercased text",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`elongation_text = “Bagus,,, murah tapi gak murahan,,,, istri jadi seneng,,,, barang reelllllll,,,,, makasih seler..... Jaga terus amanah mu,,,, semoga tokonya laris manis.”
-print(shorten_elongation(elongation_text))
+              {`from leksara.function import case_normal
 
->> Bagus,, murah tapi gak murahan,, istri jadi seneng,, barang reell,, makasih seler.. Jaga terus amanah mu,, semoga tokonya laris manis.`}
+text = "Produk BAGUS!!!"
+result = case_normal(text)
+
+print(result)
+
+>>> "produk bagus!!!"
+`}
             </UseCase>
 
             <div>
@@ -148,13 +148,13 @@ print(shorten_elongation(elongation_text))
           </div>
         </div>
 
-        {/* 03 — replace_acronyms --------------------------------------------------- */}
+        {/* 03 — remove_stopwords --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="03"
-            title="replace_acronyms"
-            signature='replace_acronyms(text: str, mode: str = "remove")-> str:'
-            description="Reduces excessive repeated characters in a word to a manageable length (e.g., “Woow” -> “Wow”)"
+            title="remove_stopwords"
+            signature="remove_stopwords (text: str) → str"
+            description="Remove Indonesian stopwords while preserving original punctuation and spacing layout. Stopwords are loaded from bundled resources and cached."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -168,19 +168,7 @@ print(shorten_elongation(elongation_text))
                   {
                     name: "text",
                     type: "str",
-                    description:
-                      "input text that may contain acronyms or abbreviations",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = “remove”",
-                    description: "Removes acronyms from the text",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = replace",
-                    description:
-                      "Replaces acronyms from the text with their expanded/meaningful form",
+                    description: "Raw text that may contain stopwords.",
                   },
                 ]}
               />
@@ -194,16 +182,20 @@ print(shorten_elongation(elongation_text))
                   {
                     name: "str",
                     description:
-                      "The processed text with acronyms removed or replaced based on mode",
+                      "Text with stopwords removed, punctuation/spaces are kept as in the input.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`acronym_text = “Harga hp baru itu 5 jt, ukurannya 5 m panjangnya.”
-print(replace_acronym(acronym_text))
->> Harga handphone baru itu 5 jt, ukurannya 5 meter panjangnya.`}
+              {`from leksara.function import remove_stopwords
+
+text = "produk ini bagus dan cepat"
+result = remove_stopwords(text)
+print(result)
+
+>>> "produk  bagus  cepat"`}
             </UseCase>
 
             <div>
@@ -215,13 +207,13 @@ print(replace_acronym(acronym_text))
           </div>
         </div>
 
-        {/* 04 — normalize_slangs --------------------------------------------------- */}
+        {/* 04 — remove_whitespace --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="04"
-            title="normalize_slangs"
-            signature='normalize_slangs(text: str, mode: str = "replace") -> str:'
-            description="Transforms informal or chat-style words into their formal equivalents (e.g., “huhu” -> “sedih”)"
+            title="remove_whitespace"
+            signature="remove_whitespace(text: str) → str"
+            description="Trim ends and collapse runs of whitespace to a single space."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -235,19 +227,7 @@ print(replace_acronym(acronym_text))
                   {
                     name: "text",
                     type: "str",
-                    description:
-                      "input text that may contain slang, informal words, or chat abbreviations",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = “remove”",
-                    description: "Removes slangs from the text",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = replace",
-                    description:
-                      "Replaces slangs from the text with their standard/formal equivalents",
+                    description: "Raw text that may contain whitespaces.",
                   },
                 ]}
               />
@@ -261,18 +241,20 @@ print(replace_acronym(acronym_text))
                   {
                     name: "str",
                     description:
-                      "Text with slang standardized or removed, depending on the mode",
+                      "Text without markup and with decoded entities.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`slangs_text = “Gw lg kesana ya, tp setelah itu gas ke mall ya”
+              {`from leksara.function import remove_whitespace
+text = "  a   b\n\t c  "
+result = remove_whitespace(text)
+print(result)
 
-print(normalize_slang(slangs_text))
-
->> Gw lg kesana ya, tp setelah itu lanjut ke mall ya`}
+>>> "a b c"
+`}
             </UseCase>
 
             <div>
@@ -284,13 +266,13 @@ print(normalize_slang(slangs_text))
           </div>
         </div>
 
-        {/* 05 — expand_contraction --------------------------------------------------- */}
+        {/* 05 — remove_digits --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="05"
-            title="expand_contraction"
-            signature="expand_contraction(text: str) -> str:"
-            description="Automatically expands shortened word forms into full words (e.g., “yg” -> “yang”)"
+            title="remove_digits"
+            signature="remove_digits (text: str) → str"
+            description="remove all digits from the text"
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -304,8 +286,7 @@ print(normalize_slang(slangs_text))
                   {
                     name: "text",
                     type: "str",
-                    description:
-                      " input text that may contain contractions (shortened word forms)",
+                    description: " raw text that may contain digits",
                   },
                 ]}
               />
@@ -318,19 +299,34 @@ print(normalize_slang(slangs_text))
                 items={[
                   {
                     name: "str",
-                    description:
-                      "Text with contractions expanded into full forms",
+                    description: "Text without digits.",
+                  },
+                ]}
+              />
+            </section>
+
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">Raises</h3>
+              <DocList
+                variant="params"
+                items={[
+                  {
+                    name: "",
+                    type: "",
+                    description: "TypeError if text is not a string",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`contraction_text = “PRIMA!! Kualitas sih standard BAGUS! Tapi yg pasti pengiriman cepat, barang asli, segel atas bawah, ga dibuka-buka sama penjual. KEREN LAH! Serasa PRO!”
+              {`from leksara.function import remove_digits
 
-print(expand_contraction(contraction_text))
+text = "abc123def45"
+result = remove_digits(text)
+print(result)
 
->> PRIMA!! Kualitas sih standard BAGUS! Tapi yang pasti pengiriman cepat, barang asli, segel atas bawah, tidak dibuka-buka sama penjual. KEREN LAH! Serasa PRO!`}
+>>> "abcdef"`}
             </UseCase>
 
             <div>
@@ -342,13 +338,13 @@ print(expand_contraction(contraction_text))
           </div>
         </div>
 
-        {/* 06 — word_normalization --------------------------------------------------- */}
+        {/* 06 — remove_puntuation --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="06"
-            title="word_normalization"
-            signature='word_normalization(text: str, method: str = "stem", word_list=None, mode: str = "keep",) -> str:'
-            description="Standardizes words by stemming or lemmatizing"
+            title="remove_puntuation"
+            signature="remove_punctuation(text: str, exclude: str | None = None) -> str"
+            description="Remove ASCII punctuation plus common Unicode punctuation (e.g., “ ” ‘ ’ — …). Use exclude to keep certain characters."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -363,35 +359,13 @@ print(expand_contraction(contraction_text))
                   {
                     name: "text",
                     type: "str",
-                    description: "Input text to normalize",
+                    description: "The input text.",
                   },
                   {
-                    name: "method",
-                    type: "str = “stem”",
-                    description: "Reduces words to their root form",
-                  },
-                  {
-                    name: "method",
-                    type: "str = “lemma”",
-                    description: "Converts words to dictionary/base form",
-                  },
-                  {
-                    name: "word_list",
-                    type: "list | None",
+                    name: "",
+                    type: "",
                     description:
-                      "A custom list of words used to guide the normalization process",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = “keep”",
-                    description:
-                      "Retains normalized words in addition to the original text",
-                  },
-                  {
-                    name: "mode",
-                    type: "str = “only”",
-                    description:
-                      "Return only the processed/normalized text found in word_list",
+                      "exclude (str, optional): Characters to keep (e.g., ()-/).",
                   },
                 ]}
               />
@@ -405,25 +379,161 @@ print(expand_contraction(contraction_text))
                   {
                     name: "str",
                     description:
-                      "The text with words normalized according to the specified method and mode.",
+                      "Text without punctuation (except excluded ones).",
                   },
                 ]}
               />
             </section>
 
-            <UseCase title="Use Case">
-              {`normalization_text = “Pengiriman barang cepat dan penggunaannya bagus sekali.”
+            <UseCase title="Use Case">{`from leksara.function import remove_punctuation
 
-print(word_normalization(normalization_text, method=”stem”, mode=”keep”))
+text1 = "halo!!! keren—bagus…"
+result1 = remove_punctuation(text1)
+print("Result:", result1)
 
->> kirim barang cepat dan guna bagus sekali
+text2 = "halo!?"
+result2 = remove_punctuation(text2, exclude="?")
+print("Result with exclude:", result2)
 
-normalization_text = “Pengiriman barang cepat dan penggunaannya bagus sekali.”
+>>> “Result: halo kerenbagus”
+>>> “Result with exclude: halo?”
+`}</UseCase>
 
-print(word_normalization(normalization_text, method=”lemma”, mode=”only”))
+            <div>
+              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
+              <a href="#" className="text-primary-600 underline">
+                Source Code
+              </a>
+            </div>
+          </div>
+        </div>
 
->> Pengiriman barang cepat dan penggunaannya bagus sekali.`}
-            </UseCase>
+        {/* 07 — replace_url --------------------------------------------------- */}
+        <div className="mt-6 space-y-6">
+          <BlockHeading
+            index="07"
+            title="replace_url"
+            signature='remove_emoji(text: str, mode: str = "remove") -> str'
+            description="Removes or replaces emojis using the bundled emoji_dictionary.json"
+          />
+
+          <div className="space-y-6 sm:ml-14">
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">
+                Parameters
+              </h3>
+
+              <DocList
+                variant="params"
+                items={[
+                  {
+                    name: "text",
+                    type: "str",
+                    description: "The input text text containing URLs..",
+                  },
+                  {
+                    name: "",
+                    type: "",
+                    description:
+                      'mode (str): "remove" to delete URLs, "replace" to substitute them with [URL].',
+                  },
+                ]}
+              />
+            </section>
+
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">Return</h3>
+              <DocList
+                variant="params"
+                items={[
+                  {
+                    name: "str",
+                    description: " Text with URLs removed or replaced.",
+                  },
+                ]}
+              />
+            </section>
+
+            <UseCase title="Use Case">{`from leksara.function import replace_url
+
+text1 = "Kunjungi https://shop.id/path?x=1 dan juga www.toko.co.id/page"
+result1 = replace_url(text1, mode="remove")
+print("Result (remove):", result1)
+
+text2 = "Kunjungi https://shop.id/path?x=1 dan juga www.toko.co.id/page"
+result2 = replace_url(text2, mode="replace")
+print("Result (replace):", result2)
+
+>>> "Result (remove): Kunjungi  dan juga "
+>>> "Result (replace): Kunjungi [URL] dan juga [URL]"`}</UseCase>
+
+            <div>
+              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
+              <a href="#" className="text-primary-600 underline">
+                Source Code
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* 08 — remove_emoji --------------------------------------------------- */}
+        <div className="mt-6 space-y-6">
+          <BlockHeading
+            index="08"
+            title="remove_emoji"
+            signature='remove_emoji(text: str, mode: str = "remove") -> str'
+            description="Removes or replaces emojis using the bundled emoji_dictionary.json"
+          />
+
+          <div className="space-y-6 sm:ml-14">
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">
+                Parameters
+              </h3>
+
+              <DocList
+                variant="params"
+                items={[
+                  {
+                    name: "text",
+                    type: "str",
+                    description: "The input text containing emojis..",
+                  },
+                  {
+                    name: "",
+                    type: "",
+                    description:
+                      'mode (str): "remove" to delete emojis, "replace" to substitute them with mapped text.',
+                  },
+                ]}
+              />
+            </section>
+
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">Return</h3>
+              <DocList
+                variant="params"
+                items={[
+                  {
+                    name: "str",
+                    description: "Text with emojis removed or replaced.",
+                  },
+                ]}
+              />
+            </section>
+
+            <UseCase title="Use Case">{`from leksara.function import remove_emoji
+
+text1 = "Mantap 👍😂"
+result1 = remove_emoji(text1, mode="remove")
+print("Result (remove):", result1)
+
+text2 = "Mantap 👍😂"
+result2 = remove_emoji(text2, mode="replace")
+print("Result (replace):", result2)
+
+>>> "Result (remove): Mantap"
+>>> "Result (replace): Mantap  bagus  ketawa banget / lucu"`}</UseCase>
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>

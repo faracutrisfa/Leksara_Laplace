@@ -42,7 +42,7 @@ const LEKSARA_PARAMS = [
 ];
 
 const GET_PRESET_PARAMS = [
-  `name (str): Preset name (e.g., "ecommerce_review").`,
+  `dname (str): Preset name (e.g., "ecommerce_review").`,
 ];
 
 const GET_PRESET_RETURN = [
@@ -365,31 +365,127 @@ print("Function steps:", len(preset["functions"]))
           />
 
           <div className="mt-6 space-y-6 sm:ml-14">
+            <section className="mt-6">
+              <h3 className="text-lg font-semibold text-primary-600">
+                i. setup_logging
+              </h3>
+
+              <p className="text-[14px]">
+                <span className="text-primary-600 font-medium cursor-pointer">
+                  setup_logging(log_file='pipeline.log') → None
+                </span>
+              </p>
+
+              <p className="mt-1 text-[13.5px] leading-relaxed text-neutral-500">
+                Configures logging for pipeline activities. Logs are written to
+                both console and file.
+              </p>
+            </section>
+
             <section>
               <h3 className="text-lg font-semibold text-primary-600">
-                Overview
+                Parameters
+              </h3>
+              <DocList items={["log_file (str): Destination file for logs."]} />
+            </section>
+
+            <UseCase title="Use Case">{`from leksara.core import setup_logging, log_pipeline_step
+from leksara.pattern import replace_phone
+from leksara.function import case_normal, remove_punctuation
+
+# This initializes logging to both console and file ("pipeline_demo.log").
+
+setup_logging("pipeline_demo.log")
+
+log_sample = "Hubungi saya di 0812-3456-7890 ya! Produk ini BAGUS banget???"
+pipeline_steps = [
+    ("replace_phone", lambda text: replace_phone(text, mode="replace")),
+    ("case_normal", case_normal),
+    ("remove_punctuation", remove_punctuation),
+]
+
+current_text = log_sample
+for name, step in pipeline_steps:
+    next_text = step(current_text)
+    log_pipeline_step(name, current_text, next_text)
+    current_text = next_text
+
+print("Final output:", current_text)
+
+>>> “2025-10-25 23:55:09,857 - INFO - replace_phone: Input: Hubungi saya di 0812-3456-7890 ya! Produk ini BAGUS banget??? | Output: Hubungi saya di [PHONE_NUMBER] ya! Produk ini BAGUS banget???”
+>>> “2025-10-25 23:55:09,857 - INFO - case_normal: Input: Hubungi saya di [PHONE_NUMBER] ya! Produk ini BAGUS banget??? | Output: hubungi saya di [phone_number] ya! produk ini bagus banget???”
+>>> “2025-10-25 23:55:09,857 - INFO - remove_punctuation: Input: hubungi saya di [phone_number] ya! produk ini bagus banget??? | Output: hubungi saya di phonenumber ya produk ini bagus banget
+Final output: hubungi saya di phonenumber ya produk ini bagus banget”
+>>> “Final output: hubungi saya di phonenumber ya produk ini bagus banget”`}</UseCase>
+
+            <SourceSection />
+          </div>
+
+          <div className="mt-6 space-y-6 sm:ml-14">
+            <section className="mt-6">
+              <h3 className="text-lg font-semibold text-primary-600">
+                ii. log_pipeline_step
+              </h3>
+
+              <p className="text-[14px]">
+                <span className="text-primary-600 font-medium cursor-pointer">
+                  log_pipeline_step(step_name: str, data: str, result: str,
+                  benchmark: float = None) → None
+                </span>
+              </p>
+
+              <p className="mt-1 text-[13.5px] leading-relaxed text-neutral-500">
+                Logs individual pipeline step execution, with optional benchmark
+                timing.
+              </p>
+            </section>
+
+            <section>
+              <h3 className="text-lg font-semibold text-primary-600">
+                Parameters
               </h3>
               <DocList
                 items={[
-                  "setup_logging(config): Configure logging format, level, and handlers.",
-                  "log_pipeline_step(step_name, metrics): Log step-wise metrics during pipeline execution.",
+                  "step_name (str): The name of the pipeline step.",
+                  "data (str): Input text before processing.",
+                  "result (str): Output text after processing.",
+                  "benchmark (float, optional): Execution time for the step (if benchmarking enabled).",
                 ]}
               />
             </section>
 
-            <UseCase title="Use Case — Basic logging setup">
-              {`from leksara.logging import setup_logging, log_pipeline_step
+            <UseCase title="Use Case">{`from leksara.core import setup_logging, log_pipeline_step
+from leksara.pattern import replace_phone
+from leksara.function import case_normal, remove_punctuation
 
-# Configure basic logging
-setup_logging(level="INFO")
+# This initializes logging to both console and file ("pipeline_demo.log").
 
-def dummy_step(text: str) -> str:
-    out = text.lower()
-    log_pipeline_step("dummy_step", {"length": len(out)})
-    return out
+setup_logging("pipeline_demo.log")
 
-print(dummy_step("PRODUK BAGUS BANGET"))`}
-            </UseCase>
+log_sample = "Hubungi saya di 0812-3456-7890 ya! Produk ini BAGUS banget???"
+pipeline_steps = [
+    ("replace_phone", lambda text: replace_phone(text, mode="replace")),
+    ("case_normal", case_normal),
+    ("remove_punctuation", remove_punctuation),
+]
+
+current_text = log_sample
+for name, step in pipeline_steps:
+    next_text = step(current_text)
+
+    # Log each transformation with step name, input, and output
+
+    log_pipeline_step(name, current_text, next_text)
+    current_text = next_text
+
+print("Final output:", current_text)
+
+>>> “2025-10-25 23:55:09,857 - INFO - replace_phone: Input: Hubungi saya di 0812-3456-7890 ya! Produk ini BAGUS banget??? | Output: Hubungi saya di [PHONE_NUMBER] ya! Produk ini BAGUS banget???”
+>>> “2025-10-25 23:55:09,857 - INFO - case_normal: Input: Hubungi saya di [PHONE_NUMBER] ya! Produk ini BAGUS banget??? | Output: hubungi saya di [phone_number] ya! produk ini bagus banget???”
+>>> “2025-10-25 23:55:09,857 - INFO - remove_punctuation: Input: hubungi saya di [phone_number] ya! produk ini bagus banget??? | Output: hubungi saya di phonenumber ya produk ini bagus banget
+Final output: hubungi saya di phonenumber ya produk ini bagus banget”
+>>> “Final output: hubungi saya di phonenumber ya produk ini bagus banget”
+`}</UseCase>
 
             <SourceSection />
           </div>

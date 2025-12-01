@@ -5,6 +5,7 @@ type ParamItem = {
   type?: string;
   defaultValue?: string;
   description?: string;
+  children?: string[]; 
 };
 
 interface DocListProps {
@@ -28,6 +29,7 @@ export default function DocList({ items, variant = "list" }: DocListProps) {
       {(items as ParamItem[]).map((item, i) => (
         <li key={i} className="marker:text-primary-500">
           <div className="leading-relaxed">
+
             <p className="font-semibold text-primary-500 text-sm">
               {item.name}
               {item.type && (
@@ -43,6 +45,15 @@ export default function DocList({ items, variant = "list" }: DocListProps) {
                 {item.description}
               </p>
             )}
+
+            {item.children && (
+              <ul className="mt-1 ml-5 space-y-1 text-neutral-500 text-[13px]">
+                {item.children.map((child, idx) => (
+                  <li key={idx}>{child}</li>
+                ))}
+              </ul>
+            )}
+
           </div>
         </li>
       ))}

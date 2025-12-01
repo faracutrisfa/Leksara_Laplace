@@ -28,13 +28,13 @@ export default function UserBrush() {
           </p>
         </div>
 
-        {/* 01 — remove_tags --------------------------------------------------- */}
+        {/* 01 — replace_phone --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="01"
-            title="remove_tags"
-            signature=""
-            description=""
+            title="replace_phone"
+            signature='replace_phone(text: str, mode: str = "remove") -> str'
+            description="Finds Indonesian phone numbers, normalizes variants of +62/62/0, validates length (10–13 digits), then removes or replaces with [PHONE_NUMBER]. Extra spaces are collapsed."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -48,7 +48,13 @@ export default function UserBrush() {
                   {
                     name: "text",
                     type: "str",
-                    description: "Raw text that may contain HTML.",
+                    description: "input text",
+                  },
+                  {
+                    name: "",
+                    type: "",
+                    description:
+                      'mode ("remove" | "replace"): Deletion or masking mode.',
                   },
                 ]}
               />
@@ -62,21 +68,26 @@ export default function UserBrush() {
                   {
                     name: "str",
                     description:
-                      "Text without markup and with decoded entities.",
+                      "Text with valid phone numbers removed or replaced.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`from leksara.function import remove_tags
-        
-        text = "<p>Halo &amp; selamat&nbsp;datang</p>"
-        result = remove_tags(text)
-        print(result)
-        
-        >>> "Halo & selamat datang"
-        `}
+              {`from leksara.pattern import replace_phone
+
+text1 = "Telp: (+62) 812 3456-7890"
+result1 = replace_phone(text1, mode="replace")
+print("Result (replace):", result1)
+
+text2 = "Nomor: 0812 3456 7890 aktif"
+result2 = replace_phone(text2, mode="remove")
+print("Result (remove):", result2)
+
+>>> "Result (replace): Telp: [PHONE_NUMBER]"
+>>> "Result (remove): Nomor: aktif"
+ `}
             </UseCase>
 
             <div>
@@ -88,13 +99,13 @@ export default function UserBrush() {
           </div>
         </div>
 
-        {/* 02 — case_normal --------------------------------------------------- */}
+        {/* 02 — replace_email --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="02"
-            title="case_normal"
-            signature=""
-            description=""
+            title="replace_email"
+            signature='replace_email(text: str, mode: str = "remove") -> str'
+            description="Detects emails using a configured regex and removes or replaces them with [EMAIL]."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -108,7 +119,13 @@ export default function UserBrush() {
                   {
                     name: "text",
                     type: "str",
-                    description: "Raw text",
+                    description: "input text",
+                  },
+                  {
+                    name: "",
+                    type: "",
+                    description:
+                      'mode ("remove" | "replace"): Deletion or masking mode.',
                   },
                 ]}
               />
@@ -121,22 +138,19 @@ export default function UserBrush() {
                 items={[
                   {
                     name: "str",
-                    description: "Lowercased text",
+                    description: "Text with valid emails removed or replaced.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`from leksara.function import case_normal
-        
-        text = "Produk BAGUS!!!"
-        result = case_normal(text)
-        
-        print(result)
-        
-        >>> "produk bagus!!!"
-        `}
+              {`from leksara.pattern import replace_email
+
+text = "Email: customer123@gmail.com"
+print(replace_email(text, mode="replace"))
+
+>>> "Email: [EMAIL]"`}
             </UseCase>
 
             <div>
@@ -148,13 +162,13 @@ export default function UserBrush() {
           </div>
         </div>
 
-        {/* 03 — remove_stopwords --------------------------------------------------- */}
+        {/* 03 — replace_address --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="03"
-            title="remove_stopwords"
-            signature=""
-            description=""
+            title="replace_address"
+            signature='replace_address(text: str, mode: str = "remove", **kwargs) -> str'
+            description="Masks address components when a trigger pattern is present (e.g., “Alamat”, “Jl.” as configured). It merges nearby components, inserts [ADDRESS], and removes a following city token if it matches the bundled city dictionary. You may selectively enable components via keyword flags (e.g., street=True). Output spacing/punctuation is cleaned."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -168,7 +182,28 @@ export default function UserBrush() {
                   {
                     name: "text",
                     type: "str",
-                    description: "Raw text that may contain stopwords.",
+                    description: "Input text.",
+                  },
+                  {
+                    name: "mode",
+                    type: '("remove" | "replace")',
+                    description: "Deletion or masking mode.",
+                  },
+                  {
+                    name: "kwargs",
+                    type: "optional",
+                    description:
+                      "Select which address components to process. Available components:",
+                    children: [
+                      "a. street: street or alley name (e.g., “Jalan Sudirman”)",
+                      "b. house: house or building number (e.g., “No. 12”)",
+                      "c. rtrw: neighborhood unit (RT/RW) (e.g., “RT 03 RW 05”)",
+                      "d. kel: subdistrict / village (e.g., “Kelurahan Melati”)",
+                      "e. kec: district (e.g., “Kecamatan Setiabudi”)",
+                      "f. kabkota: regency / city (e.g., “Kabupaten Sragen”, “Kota Bandung”)",
+                      "g. prov: province (e.g., “Provinsi Jawa Tengah”)",
+                      "h. zip: postal code (e.g., “57262”)",
+                    ],
                   },
                 ]}
               />
@@ -182,20 +217,21 @@ export default function UserBrush() {
                   {
                     name: "str",
                     description:
-                      "Text with stopwords removed, punctuation/spaces are kept as in the input.",
+                      "Text with valid addresses removed or replaced.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`from leksara.function import remove_stopwords
-        
-        text = "produk ini bagus dan cepat"
-        result = remove_stopwords(text)
-        print(result)
-        
-        >>> "produk  bagus  cepat"`}
+              {`from leksara.pattern import replace_address
+
+text = "Alamatku di Jl. Merdeka No. 12 RT 02 RW 03, Jakarta"
+result = replace_address(text, mode="replace")
+print(result)
+
+>>> "Alamatku di [ADDRESS]"
+`}
             </UseCase>
 
             <div>
@@ -207,13 +243,13 @@ export default function UserBrush() {
           </div>
         </div>
 
-        {/* 04 — remove_whitespace --------------------------------------------------- */}
+        {/* 04 — replace_id --------------------------------------------------- */}
         <div className="mt-6 space-y-6">
           <BlockHeading
             index="04"
-            title="remove_whitespace"
-            signature=""
-            description=""
+            title="replace_id"
+            signature='replace_id(text: str, mode: str = "remove") -> str'
+            description="Masks Indonesian NIK using a configured regex pattern; replacement token is [NIK]."
           />
 
           <div className="space-y-6 sm:ml-14">
@@ -227,7 +263,13 @@ export default function UserBrush() {
                   {
                     name: "text",
                     type: "str",
-                    description: "Raw text that may contain whitespaces.",
+                    description: "input text",
+                  },
+                  {
+                    name: "",
+                    type: "",
+                    description:
+                      'mode ("remove" | "replace"): Deletion or masking mode.',
                   },
                 ]}
               />
@@ -241,20 +283,20 @@ export default function UserBrush() {
                   {
                     name: "str",
                     description:
-                      "Text without markup and with decoded entities.",
+                      "Text with valid IDs (NIK) removed or replaced.",
                   },
                 ]}
               />
             </section>
 
             <UseCase title="Use Case">
-              {`from leksara.function import remove_whitespace
-        text = "  a   b\n\t c  "
-        result = remove_whitespace(text)
-        print(result)
-        
-        >>> "a b c"
-        `}
+              {`from leksara.pattern import replace_id
+
+text = "NIK: 3276120705010003"
+print(replace_id(text, mode="replace"))
+
+>>> "NIK: [NIK]"
+ `}
             </UseCase>
 
             <div>
