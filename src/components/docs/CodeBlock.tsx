@@ -86,7 +86,7 @@ export default function CodeBlock({
         </button>
       </div>
 
-      <pre className="overflow-x-auto whitespace-pre-wrap p-4 font-code text-xs leading-relaxed text-primary-900 lg:text-[15px]">
+      <pre className="overflow-x-auto whitespace-pre-wrap p-4 font-code text-xs leading-relaxed text-primary-700 lg:text-[15px]">
         <code dangerouslySetInnerHTML={{ __html: highlighted }} />
       </pre>
     </div>

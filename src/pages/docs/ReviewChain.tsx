@@ -3,56 +3,85 @@ import BlockHeading from "../../components/docs/BlockHeading";
 import DocList from "../../components/docs/DocList";
 import UseCase from "../../components/docs/UseCase";
 
-const introTextClass =
+const INTRO_TEXT_CLASS =
   "sm:ml-14 mt-3 text-[13px] sm:text-[15px] leading-relaxed text-neutral-4 font-medium";
 
 const CLASS_PARAMS = [
-  <span>
+  <span key="data">
     <strong>data</strong> (iterable[str] or pandas.Series): Input text data.
   </span>,
 ];
 
 const CLASS_METHODS = [
-  <span>
+  <span key="from_steps">
     <strong>from_steps(functions)</strong> → Build a chain manually.
   </span>,
-  <span>
+  <span key="from_preset">
     <strong>from_preset(name)</strong> → Load a built-in preset pipeline.
   </span>,
-  <span>
+  <span key="run">
     <strong>run(text)</strong> → Process a single text input.
   </span>,
-  <span>
+  <span key="run_on_series">
     <strong>run_on_series(series)</strong> → Run chain on pandas Series.
   </span>,
-  <span>
+  <span key="transform">
     <strong>transform(text)</strong> → Internal method to run transforms in one
     step.
   </span>,
-  <span>
+  <span key="named_steps">
     <strong>named_steps</strong> → Returns the names of each transform step.
   </span>,
 ];
 
+const LEKSARA_PARAMS = [
+  "data (iterable[str] or pandas.Series): Input text data.",
+  `pipeline (dict, optional): Custom pipeline defined as {"patterns": [...], "functions": [...]}.`,
+  `preset (str, optional): Built-in preset name (e.g., "ecommerce_review").`,
+  "benchmark (bool): If True, returns execution time per step.",
+];
+
+const GET_PRESET_PARAMS = [
+  `name (str): Preset name (e.g., "ecommerce_review").`,
+];
+
+const GET_PRESET_RETURN = [
+  `dict: Pipeline definition with "patterns" and "functions" lists.`,
+];
+
+function SourceSection() {
+  return (
+    <section>
+      <h3 className="text-lg font-semibold text-primary-600">Source</h3>
+      <a href="#" className="text-primary-600 underline">
+        Source Code
+      </a>
+    </section>
+  );
+}
+
 export default function ReviewChain() {
   return (
-    <article className="text-sm sm:text-base text-slate-700 leading-relaxed">
+    <article className="text-sm sm:text-base leading-relaxed text-slate-700">
       <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900">
         Leksara Modules
       </h1>
 
       <section className="mt-10">
+        {/* ================= 05. ReviewChain – Overview ================= */}
         <SectionHeading index="05" title="ReviewChain" />
 
-        <div className={introTextClass}>
+        <div className={INTRO_TEXT_CLASS}>
           <p>
             End-to-end Indonesian text preprocessing pipeline with support for
-            customizable steps, benchmarking, and logging. Functions & Class:
-            run_pipeline (includes benchmark and preset), ReviewChain (class),
-            get_preset, logging (includes setup_logging and log_pipeline_step)
+            customizable steps, benchmarking, and logging. Functions &amp;
+            Class: run_pipeline (includes benchmark and preset), ReviewChain
+            (class), get_preset, logging (includes setup_logging and
+            log_pipeline_step).
           </p>
         </div>
 
+        {/* ================= 01 — leksara ================= */}
         <div className="mt-6">
           <BlockHeading
             index="01"
@@ -62,20 +91,15 @@ export default function ReviewChain() {
           />
 
           <div className="mt-6 space-y-6 sm:ml-14">
+            {/* Parameters */}
             <section>
               <h3 className="text-lg font-semibold text-primary-600">
                 Parameters
               </h3>
-              <DocList
-                items={[
-                  "data (iterable[str] or pandas.Series): Input text data.",
-                  `pipeline (dict, optional): Custom pipeline defined as {"patterns": [...], "functions": [...]}.`,
-                  `preset (str, optional): Built-in preset name (e.g., "ecommerce_review").`,
-                  "benchmark (bool): If True, returns execution time per step.",
-                ]}
-              />
+              <DocList items={LEKSARA_PARAMS} />
             </section>
 
+            {/* Return */}
             <section>
               <h3 className="text-lg font-semibold text-primary-600">Return</h3>
               <p className="mt-2 text-slate-600">
@@ -85,22 +109,23 @@ export default function ReviewChain() {
               </p>
             </section>
 
+            {/* Use cases */}
             <UseCase title="Use Case">
               {`from leksara import leksara
 
 def append_suffix(text: str, suffix: str) -> str:
-    return f"{text}{suffix}"
+    return f"{text}{suffix}"
 
 def uppercase(text: str) -> str:
-    return text.upper()
+    return text.upper()
 
 # Custom pipeline combining replacement, suffix, and case normalization
 pipeline = {
-    "patterns": [lambda s: s.replace("buruk", "baik")],
-    "functions": [
-        (append_suffix, {"suffix": "!"}),
-        uppercase,
-    ],
+    "patterns": [lambda s: s.replace("buruk", "baik")],
+    "functions": [
+        (append_suffix, {"suffix": "!"}),
+        uppercase,
+    ],
 }
 
 result = leksara(["produk buruk"], pipeline=pipeline)
@@ -114,20 +139,20 @@ from leksara.pattern import replace_phone, replace_email
 
 # Define a custom pipeline combining PII masking and text cleaning
 custom_pipeline = {
-    "patterns": [
-        (replace_phone, {"mode": "replace"}),
-        (replace_email, {"mode": "replace"}),
-    ],
-    "functions": [
-        case_normal,
-        remove_punctuation,
-        remove_whitespace
-    ],
+    "patterns": [
+        (replace_phone, {"mode": "replace"}),
+        (replace_email, {"mode": "replace"}),
+    ],
+    "functions": [
+        case_normal,
+        remove_punctuation,
+        remove_whitespace
+    ],
 }
 
 texts = [
-    "Hubungi 0812-3456-7890 atau email ke Test@Example.com !!!",
-    "WA: +628987654321. Produk BAGUS banget!!"
+    "Hubungi 0812-3456-7890 atau email ke Test@Example.com !!!",
+    "WA: +628987654321. Produk BAGUS banget!!"
 ]
 
 result = leksara(texts, pipeline=custom_pipeline)
@@ -137,12 +162,12 @@ print(result)
 >>> “wa [PHONE_NUMBER] produk bagus banget”`}
             </UseCase>
 
-            <UseCase title="Use Case - Using built-in preset (ecommerce_review) ">
+            <UseCase title="Use Case - Using built-in preset (ecommerce_review)">
               {`from leksara import leksara
 
 texts = [
-    "Hubungi saya di 0812-3456-7890, Email: test@mail.com!",
-    "Produk bagus banget!!!"
+    "Hubungi saya di 0812-3456-7890, Email: test@mail.com!",
+    "Produk bagus banget!!!"
 ]
 
 result = leksara(texts, preset="ecommerce_review")
@@ -160,17 +185,17 @@ from leksara.pattern import replace_phone
 
 # Define a custom pipeline combining a UserBrush pattern and core cleaning functions
 pipeline = {
-    "patterns": [
-        (replace_phone, {"mode": "replace"})  # Mask phone numbers before cleaning
-    ],
-    "functions": [
-        case_normal,
-        remove_punctuation,
-        remove_whitespace
-    ],
+    "patterns": [
+        (replace_phone, {"mode": "replace"})  # Mask phone numbers before cleaning
+    ],
+    "functions": [
+        case_normal,
+        remove_punctuation,
+        remove_whitespace
+    ],
 }
 
-texts = ["Hubungi saya di 0812-3456-7890 sekarang juga!!!   "]
+texts = ["Hubungi saya di 0812-3456-7890 sekarang juga!!!   "]
 
 result, metrics = leksara(texts, pipeline=pipeline, benchmark=True)
 print("Result:", result)
@@ -178,15 +203,15 @@ print("Benchmark:", metrics)
 
 >>> “Result: ["hubungi saya di phone_number sekarang juga"]”
 >>> “Benchmark: {
-      'n_steps': 4,
-      'total_time_sec': 0.0041,
-      'per_step': [
-          ('replace_phone', 0.0012),
-          ('case_normal', 0.0010),
-          ('remove_punctuation', 0.0011),
-          ('remove_whitespace', 0.0008)
-      ]
-    }”`}
+      'n_steps': 4,
+      'total_time_sec': 0.0041,
+      'per_step': [
+          ('replace_phone', 0.0012),
+          ('case_normal', 0.0010),
+          ('remove_punctuation', 0.0011),
+          ('remove_whitespace', 0.0008)
+      ]
+    }”`}
             </UseCase>
 
             <UseCase title="Use Case - Handles mixed data types">
@@ -204,15 +229,11 @@ print(result)
 `}
             </UseCase>
 
-            <section>
-              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
-                Source Code
-              </a>
-            </section>
+            <SourceSection />
           </div>
         </div>
 
+        {/* ================= 02 — ReviewChain (Class) ================= */}
         <div className="mt-10">
           <BlockHeading
             index="02"
@@ -288,19 +309,15 @@ print(rc.named_steps)
 >>> “{'step_0': 'remove_tags', 'step_1': 'case_normal'}”`}
             </UseCase>
 
-            <section>
-              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
-                Source Code
-              </a>
-            </section>
+            <SourceSection />
           </div>
         </div>
 
+        {/* ================= 03 — get_preset ================= */}
         <div className="mt-10">
           <BlockHeading
             index="03"
-            title="get_present"
+            title="get_preset"
             signature="get_preset(name: str) -> dict"
             description="Retrieves a predefined pipeline preset as a dictionary."
           />
@@ -310,18 +327,12 @@ print(rc.named_steps)
               <h3 className="text-lg font-semibold text-primary-600">
                 Parameters
               </h3>
-              <DocList
-                items={[`dname (str): Preset name (e.g., "ecommerce_review").`]}
-              />
+              <DocList items={GET_PRESET_PARAMS} />
             </section>
 
             <section>
               <h3 className="text-lg font-semibold text-primary-600">Return</h3>
-              <DocList
-                items={[
-                  `dict: Pipeline definition with "patterns" and "functions" lists.`,
-                ]}
-              />
+              <DocList items={GET_PRESET_RETURN} />
             </section>
 
             <UseCase title="Use Case">
@@ -340,54 +351,47 @@ print("Function steps:", len(preset["functions"]))
 >>> Function steps: 13`}
             </UseCase>
 
-            <section>
-              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
-                Source Code
-              </a>
-            </section>
+            <SourceSection />
           </div>
         </div>
 
+        {/* ================= 04 — logging ================= */}
         <div className="mt-10">
           <BlockHeading
             index="04"
             title="logging"
-            signature="class ReviewChain(steps=None)"
-            description="Object-oriented pipeline runner, compatible with scikit-learn style APIs."
+            signature="logging utilities (setup_logging, log_pipeline_step)"
+            description="Helpers to track, record, and debug pipeline execution."
           />
 
           <div className="mt-6 space-y-6 sm:ml-14">
             <section>
               <h3 className="text-lg font-semibold text-primary-600">
-                Constructor Parameters
+                Overview
               </h3>
-              <DocList items={CLASS_PARAMS} />
+              <DocList
+                items={[
+                  "setup_logging(config): Configure logging format, level, and handlers.",
+                  "log_pipeline_step(step_name, metrics): Log step-wise metrics during pipeline execution.",
+                ]}
+              />
             </section>
 
-            <section>
-              <h3 className="text-lg font-semibold text-primary-600">
-                Class Methods
-              </h3>
-              <DocList items={CLASS_METHODS} />
-            </section>
+            <UseCase title="Use Case — Basic logging setup">
+              {`from leksara.logging import setup_logging, log_pipeline_step
 
-            <UseCase title="Use Case — Build from steps (from_steps)">
-              {`from leksara.core import ReviewChain
-...`}
+# Configure basic logging
+setup_logging(level="INFO")
+
+def dummy_step(text: str) -> str:
+    out = text.lower()
+    log_pipeline_step("dummy_step", {"length": len(out)})
+    return out
+
+print(dummy_step("PRODUK BAGUS BANGET"))`}
             </UseCase>
 
-            <UseCase title="Use Case — Use a preset (from_preset)">
-              {`from leksara.core import ReviewChain
-...`}
-            </UseCase>
-
-            <section>
-              <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
-                Source Code
-              </a>
-            </section>
+            <SourceSection />
           </div>
         </div>
       </section>
