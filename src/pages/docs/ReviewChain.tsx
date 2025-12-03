@@ -49,12 +49,22 @@ const GET_PRESET_RETURN = [
   `dict: Pipeline definition with "patterns" and "functions" lists.`,
 ];
 
-function SourceSection() {
+interface SourceSectionProps {
+  href: string;
+  label?: string;
+}
+
+function SourceSection({ href, label = "Source Code" }: SourceSectionProps) {
   return (
     <section>
       <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-      <a href="#" className="text-primary-600 underline">
-        Source Code
+      <a
+        href={href}
+        target="_blank"
+        className="text-primary-600 underline"
+        rel="noreferrer"
+      >
+        {label}
       </a>
     </section>
   );
@@ -229,7 +239,7 @@ print(result)
 `}
             </UseCase>
 
-            <SourceSection />
+            <SourceSection href="https://github.com/RedEye1605/Leksara/blob/main/leksara/core/chain.py" />
           </div>
         </div>
 
@@ -309,7 +319,7 @@ print(rc.named_steps)
 >>> “{'step_0': 'remove_tags', 'step_1': 'case_normal'}”`}
             </UseCase>
 
-            <SourceSection />
+            <SourceSection href="https://github.com/RedEye1605/Leksara/blob/main/leksara/core/chain.py" />
           </div>
         </div>
 
@@ -351,7 +361,7 @@ print("Function steps:", len(preset["functions"]))
 >>> Function steps: 13`}
             </UseCase>
 
-            <SourceSection />
+            <SourceSection href="https://github.com/RedEye1605/Leksara/blob/main/leksara/core/presets.py" />
           </div>
         </div>
 
@@ -418,7 +428,7 @@ print("Final output:", current_text)
 Final output: hubungi saya di phonenumber ya produk ini bagus banget”
 >>> “Final output: hubungi saya di phonenumber ya produk ini bagus banget”`}</UseCase>
 
-            <SourceSection />
+            <SourceSection href="https://github.com/RedEye1605/Leksara/blob/main/leksara/core/logging.py" />
           </div>
 
           <div className="mt-6 space-y-6 sm:ml-14">
@@ -487,7 +497,7 @@ Final output: hubungi saya di phonenumber ya produk ini bagus banget”
 >>> “Final output: hubungi saya di phonenumber ya produk ini bagus banget”
 `}</UseCase>
 
-            <SourceSection />
+            <SourceSection href="https://github.com/RedEye1605/Leksara/blob/main/leksara/core/logging.py" />
           </div>
         </div>
       </section>

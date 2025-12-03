@@ -149,7 +149,7 @@ single_card.to_dict()`}
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/frames/cartboard.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -247,7 +247,7 @@ single_card.to_dict()`}
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/frames/cartboard.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -345,7 +345,7 @@ single_card.to_dict()`}
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/frames/cartboard.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>

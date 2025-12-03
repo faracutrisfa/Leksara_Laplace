@@ -92,7 +92,7 @@ print("Result (remove):", result2)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/tree/main/leksara/functions/patterns" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -155,7 +155,7 @@ print(replace_email(text, mode="replace"))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/tree/main/leksara/functions/patterns" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -236,7 +236,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/tree/main/leksara/functions/patterns" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -301,7 +301,7 @@ print(replace_id(text, mode="replace"))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/tree/main/leksara/functions/patterns" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>

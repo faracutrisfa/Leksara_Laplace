@@ -13,9 +13,9 @@ export default function ReviewCleaner() {
         Leksara Modules
       </h1>
 
-      {/* 02 — ReviewCleaner --------------------------------------------------- */}
+      {/* 03 — ReviewCleaner --------------------------------------------------- */}
       <section className="mt-10">
-        <SectionHeading index="02" title="ReviewCleaner" />
+        <SectionHeading index="03" title="ReviewCleaner" />
 
         <div className={introTextClass}>
           <p>
@@ -81,7 +81,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -141,7 +141,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -200,7 +200,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -259,7 +259,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -331,7 +331,7 @@ print(result)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -401,7 +401,7 @@ print("Result with exclude:", result2)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -469,7 +469,7 @@ print("Result (replace):", result2)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -537,7 +537,7 @@ print("Result (replace):", result2)
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/cleaner/basic.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>

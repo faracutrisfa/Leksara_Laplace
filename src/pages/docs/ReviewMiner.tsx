@@ -13,9 +13,9 @@ export default function ReviewMiner() {
         Leksara Modules
       </h1>
 
-      {/* 03 — ReviewMiner --------------------------------------------------- */}
+      {/* 02 — ReviewMiner --------------------------------------------------- */}
       <section className="mt-10">
-        <SectionHeading index="03" title="ReviewMiner" />
+        <SectionHeading index="02" title="ReviewMiner" />
 
         <div className={introTextClass}>
           <p>
@@ -75,7 +75,7 @@ print(replace_rating(rating_text))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -138,7 +138,7 @@ print(shorten_elongation(elongation_text))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -205,7 +205,7 @@ print(replace_acronym(acronym_text))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -274,7 +274,7 @@ print(normalize_slang(slangs_text))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -332,7 +332,7 @@ print(expand_contraction(contraction_text))
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>
@@ -424,7 +424,7 @@ print(word_normalization(normalization_text, method=”lemma”, mode=”only”
 
             <div>
               <h3 className="text-lg font-semibold text-primary-600">Source</h3>
-              <a href="#" className="text-primary-600 underline">
+              <a href="https://github.com/RedEye1605/Leksara/blob/main/leksara/functions/review/advanced.py" target="_blank" className="text-primary-600 underline">
                 Source Code
               </a>
             </div>

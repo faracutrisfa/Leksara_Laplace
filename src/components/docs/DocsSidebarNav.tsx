@@ -54,6 +54,19 @@ const MODULE_ITEMS: ModuleItem[] = [
     ],
   },
   {
+    key: "review-miner",
+    label: "Review Miner",
+    to: "/docs/modules/review-miner",
+    methods: [
+      { label: "replace_rating" },
+      { label: "shorten_elongation" },
+      { label: "replace_acronyms" },
+      { label: "normalize_slangs" },
+      { label: "expand_contraction" },
+      { label: "word_normalization" },
+    ],
+  },
+  {
     key: "review-cleaner",
     label: "Review Cleaner",
     to: "/docs/modules/review-cleaner",
@@ -66,19 +79,6 @@ const MODULE_ITEMS: ModuleItem[] = [
       { label: "remove_puntutations" },
       { label: "replace_url" },
       { label: "remove_emoji" },
-    ],
-  },
-  {
-    key: "review-miner",
-    label: "Review Miner",
-    to: "/docs/modules/review-miner",
-    methods: [
-      { label: "replace_rating" },
-      { label: "shorten_elongation" },
-      { label: "replace_acronyms" },
-      { label: "normalize_slangs" },
-      { label: "expand_contraction" },
-      { label: "word_normalization" },
     ],
   },
   {

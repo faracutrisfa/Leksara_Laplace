@@ -29,14 +29,14 @@ const DOC_PAGES: DocPage[] = [
     description: "Detect noisy review data for cart analysis",
   },
   {
-    path: "/docs/modules/review-cleaner",
-    label: "Review Cleaner",
-    description: "Clean and normalize raw review text",
-  },
-  {
     path: "/docs/modules/review-miner",
     label: "Review Miner",
     description: "Extract patterns and signals from reviews",
+  },
+  {
+    path: "/docs/modules/review-cleaner",
+    label: "Review Cleaner",
+    description: "Clean and normalize raw review text",
   },
   {
     path: "/docs/modules/userbrush",
