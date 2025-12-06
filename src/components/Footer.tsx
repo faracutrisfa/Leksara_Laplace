@@ -69,7 +69,7 @@ export default function Footer() {
 
       <div className="border-t border-neutral-200/60 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 text-xs sm:text-sm lg:text-base text-neutral-700">
-          <div className="flex flex-col items-center justify-between gap-3 md:flex-row md:items-center">
+          <a href="http://instagram.com/cutrisfz_" target="_blank" className="flex flex-col items-center justify-between gap-3 md:flex-row md:items-center">
             <p className="text-center md:text-left">
               © 2025 Basic Computing Community FILKOM UB. All rights reserved.
             </p>
@@ -82,7 +82,7 @@ export default function Footer() {
                 Privacy Policy
               </a>
             </nav>
-          </div>
+          </a>
         </div>
       </div>
     </footer>
