@@ -38,6 +38,7 @@ interface TechImageProps {
 interface SocialItem {
   label: string;
   icon: string;
+  href: string;
 }
 
 const CircleIcon = ({
@@ -206,12 +207,26 @@ const DesktopLayout = () => (
 );
 
 const SOCIALS: SocialItem[] = [
-  { label: "TikTok", icon: "ri:tiktok-fill" },
-  { label: "YouTube", icon: "mdi:youtube" },
-  { label: "Instagram", icon: "mdi:instagram" },
-  { label: "TikTok", icon: "ri:tiktok-fill" },
-  { label: "YouTube", icon: "mdi:youtube" },
-  { label: "Instagram", icon: "mdi:instagram" },
+  {
+    label: "YouTube",
+    icon: "mdi:youtube",
+    href: "https://youtube.com/@bccfilkomub?si=s9In3Cpvejn2W7wI",
+  },
+  {
+    label: "Instagram",
+    icon: "mdi:instagram",
+    href: "http://instagram.com/bccfilkom",
+  },
+  {
+    label: "TikTok",
+    icon: "ri:tiktok-fill",
+    href: "https://www.tiktok.com/@bccfilkom",
+  },
+  {
+    label: "LinkedIn",
+    icon: "mdi:linkedin",
+    href: "https://www.linkedin.com/company/bccfilkomub",
+  },
 ];
 
 const InfoCard = () => (
@@ -290,19 +305,16 @@ const SocialMarquee = () => (
     <div className="relative flex">
       <motion.div
         className="flex shrink-0 gap-8 lg:gap-12"
-        animate={{
-          x: ["0%", "-50%"],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        animate={{ x: ["0%", "-50%"] }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       >
         {[...SOCIALS, ...SOCIALS].map((item, idx) => (
-          <div
+          <a
             key={`${item.label}-${idx}`}
-            className="inline-flex shrink-0 items-center gap-3 opacity-60 lg:gap-4"
+            href={item.href}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex shrink-0 items-center gap-3 opacity-60 transition hover:opacity-100 lg:gap-4"
           >
             <Icon
               icon={item.icon}
@@ -311,7 +323,7 @@ const SocialMarquee = () => (
             <span className="whitespace-nowrap text-lg font-medium text-neutral-400 lg:text-xl">
               {item.label}
             </span>
-          </div>
+          </a>
         ))}
       </motion.div>
     </div>
@@ -393,20 +405,19 @@ const MidStrip = () => (
           <motion.div
             className="flex gap-8 opacity-60"
             animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
             {[...SOCIALS, ...SOCIALS].map((item, idx) => (
-              <div
+              <a
                 key={`${item.label}-${idx}`}
-                className="flex items-center gap-2"
+                href={item.href}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 transition hover:opacity-100"
               >
                 <Icon icon={item.icon} className="text-xl text-neutral-400" />
                 <span className="text-sm text-neutral-400">{item.label}</span>
-              </div>
+              </a>
             ))}
           </motion.div>
         </div>
