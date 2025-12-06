@@ -4,12 +4,24 @@ import Logo from "./Logo";
 const SOCIAL_LINKS = [
   {
     icon: "streamline-plump:tiktok-solid",
-    href: "#",
+    href: "https://www.tiktok.com/@bccfilkom",
     label: "Leksara on TikTok",
   },
-  { icon: "mdi:youtube", href: "#", label: "Leksara on YouTube" },
-  { icon: "ri:instagram-fill", href: "#", label: "Leksara on Instagram" },
-  { icon: "ri:linkedin-fill", href: "#", label: "Leksara on LinkedIn" },
+  {
+    icon: "mdi:youtube",
+    href: "https://youtube.com/@bccfilkomub?si=s9In3Cpvejn2W7wI",
+    label: "Leksara on YouTube",
+  },
+  {
+    icon: "ri:instagram-fill",
+    href: "http://instagram.com/bccfilkom",
+    label: "Leksara on Instagram",
+  },
+  {
+    icon: "ri:linkedin-fill",
+    href: "https://www.linkedin.com/company/bccfilkomub",
+    label: "Leksara on LinkedIn",
+  },
 ];
 
 export default function Footer() {
@@ -36,6 +48,7 @@ export default function Footer() {
                     key={icon}
                     href={href}
                     aria-label={label}
+                    target="_blank"
                     className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/30 backdrop-blur-md transition hover:bg-white/40"
                   >
                     <Icon icon={icon} width={20} />
@@ -69,7 +82,11 @@ export default function Footer() {
 
       <div className="border-t border-neutral-200/60 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-5 text-xs sm:text-sm lg:text-base text-neutral-700">
-          <a href="http://instagram.com/cutrisfz_" target="_blank" className="flex flex-col items-center justify-between gap-3 md:flex-row md:items-center">
+          <a
+            href="http://instagram.com/cutrisfz_"
+            target="_blank"
+            className="flex flex-col items-center justify-between gap-3 md:flex-row md:items-center"
+          >
             <p className="text-center md:text-left">
               © 2025 Basic Computing Community FILKOM UB. All rights reserved.
             </p>
